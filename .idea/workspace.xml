@@ -4,18 +4,40 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bfae40e8-9e96-49c1-a787-8cd4798ebe61" name="Changes" comment="Add lab_2 pdf file">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/META-INF/maven/archetype.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/archetype-resources/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/archetype-resources/src/main/java/App.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/archetype-resources/src/test/java/AppTest.java" afterDir="false" />
+    <list default="true" id="bfae40e8-9e96-49c1-a787-8cd4798ebe61" name="Changes" comment="Add labs_3-4">
+      <change afterPath="$PROJECT_DIR$/src/main/java/gui/BaseChildFrame.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/gui/FrameGame.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/gui/FrameMainMenu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/gui/FrameSavedGames.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/gui/FrameStat.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/delete.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/down.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/exit.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/exit.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/gold.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/goldman_down.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/goldman_left.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/goldman_right.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/goldman_up.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/left.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/load.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/load_small.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/monster_down.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/monster_left.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/monster_right.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/monster_up.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/new.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/noicon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/right.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/save.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/search.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/stat.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/up.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/wait.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/wall.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/archetype-resources/src/main/java/App.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/archetype-resources/src/test/java/AppTest.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,33 +67,53 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH": "154",
-    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "288",
-    "WebServerToolWindowFactoryState": "false",
-    "jdk.selected.JAVA_MODULE": "1.8",
-    "last_opened_file_path": "D:/IdeaProjects_2023/Labirint/src/main/resources/labs",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "project.propGUI"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH&quot;: &quot;154&quot;,
+    &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH&quot;: &quot;288&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;1.8&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/IdeaProjects_2023/Labirint/src/main/java&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propGUI&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\IdeaProjects_2023\Labirint\src\main\java" />
       <recent name="D:\IdeaProjects_2023\Labirint\src\main\resources\labs" />
       <recent name="D:\IdeaProjects_2023\Labirint\src\main\resources" />
       <recent name="D:\IdeaProjects_2023\Labirint\src\main\java\objects\common" />
       <recent name="D:\IdeaProjects_2023\Labirint\src\main\java\objects\interfaces" />
-      <recent name="D:\IdeaProjects_2023\Labirint\src\main\java\objects" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\IdeaProjects_2023\Labirint\src\main\resources" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="FrameMainMenu" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="gui.FrameMainMenu" />
+      <module name="Labirint" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="gui.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.FrameMainMenu" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -87,7 +129,12 @@
       <workItem from="1681297548820" duration="2476000" />
       <workItem from="1681375227552" duration="4190000" />
       <workItem from="1681408382713" duration="1156000" />
-      <workItem from="1681624914831" duration="2809000" />
+      <workItem from="1681624914831" duration="3694000" />
+      <workItem from="1681727467157" duration="880000" />
+      <workItem from="1681789585822" duration="5629000" />
+      <workItem from="1682336743693" duration="2040000" />
+      <workItem from="1682416463600" duration="1749000" />
+      <workItem from="1682510808866" duration="1979000" />
     </task>
     <task id="LOCAL-00001" summary="Add lab_2 pdf file">
       <created>1681664884831</created>
@@ -96,7 +143,21 @@
       <option name="project" value="LOCAL" />
       <updated>1681664884831</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="commit">
+      <created>1681665077120</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1681665077120</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Add labs_3-4">
+      <created>1681796242984</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1681796242984</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -115,6 +176,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Add lab_2 pdf file" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add lab_2 pdf file" />
+    <MESSAGE value="commit" />
+    <MESSAGE value="Add labs_3-4" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add labs_3-4" />
   </component>
 </project>
