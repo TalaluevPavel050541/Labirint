@@ -1,5 +1,6 @@
 package objects.common;
 
+import abstracts.AbstractGameObject;
 import enums.GameObjectType;
 
 

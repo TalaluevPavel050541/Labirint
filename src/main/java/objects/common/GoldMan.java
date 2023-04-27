@@ -1,5 +1,7 @@
 package objects.common;
 
+import abstracts.AbstractGameObject;
+import abstracts.AbstractMovingObject;
 import enums.GameObjectType;
 import enums.MovingDirection;
 

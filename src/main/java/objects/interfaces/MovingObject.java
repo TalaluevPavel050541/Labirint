@@ -5,7 +5,7 @@
 package objects.interfaces;
 
 import enums.MovingDirection;
-import objects.common.AbstractGameObject;
+import abstracts.AbstractGameObject;
 
 import javax.swing.*;
 

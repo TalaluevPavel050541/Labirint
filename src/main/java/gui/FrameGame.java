@@ -1,5 +1,8 @@
 package gui;
 
+import objects.interfaces.GameMap;
+import objects.maps.FSGameMap;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -9,12 +12,14 @@ public class FrameGame extends BaseChildFrame implements ActionListener {
 
 
     private JPanel panel1;
+    private GameMap gameMap = new FSGameMap();
 
     /**
      * Creates new form FrameGame
      */
     public FrameGame() {
       initComponents();
+      gameMap.loadMap("game.map");
     }
 
     /**

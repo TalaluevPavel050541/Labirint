@@ -1,5 +1,6 @@
-package objects.common;
+package abstracts;
 
+import abstracts.AbstractGameObject;
 import objects.interfaces.MovingObject;
 
 import javax.swing.*;
