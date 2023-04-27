@@ -3,13 +3,14 @@ package gui;
 
 import enums.LocationType;
 import objects.gui.maps.JTableGameMap;
+import objects.interfaces.gamemap.MapCollection;
 
 public class FrameMainMenu extends BaseChildFrame {
     private FrameGame frameGame = new FrameGame();
     private FrameStat frameStat = new FrameStat();
     private FrameSavedGames frameLoadGame = new FrameSavedGames();
 
-    private JTableGameMap gameMap = new JTableGameMap(LocationType.FS, "game.map");
+    private JTableGameMap gameMap = new JTableGameMap(LocationType.FS, "game.map", new MapCollection());
 
     /**
      * Creates new form FrameMainMenu

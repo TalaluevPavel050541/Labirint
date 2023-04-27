@@ -1,14 +1,12 @@
 package abstracts;
 
 import enums.GameObjectType;
-import objects.common.Coordinate;
-import objects.interfaces.GameMap;
-
+import enums.MovingDirection;
+import objects.interfaces.collections.GameCollection;
+import objects.interfaces.gamemap.GameMap;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.EnumMap;
-import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * базовая карта без конкретного отображения
@@ -22,22 +20,13 @@ public abstract class AbstractGameMap implements GameMap, Serializable { // Seri
     private String name;
     private boolean exitExist;
     private boolean goldManExist;
+    private GameCollection gameCollection;
 
-    private HashMap<Coordinate, AbstractGameObject> gameObjects = new HashMap<>();// хранит все объекты с доступом по координатам
-    private EnumMap<GameObjectType, ArrayList<AbstractGameObject>> typeObjects = new EnumMap<>(GameObjectType.class); // хранит список объектов для каждого типа
+    public AbstractGameMap() {
+    }
 
-    public void addGameObject(AbstractGameObject gameObject) {
-
-        ArrayList<AbstractGameObject> tmpList = typeObjects.get(gameObject.getType());
-
-        if (tmpList == null) {
-            tmpList = new ArrayList<>();
-        }
-
-        tmpList.add(gameObject);
-
-        gameObjects.put(gameObject.getCoordinate(), gameObject);
-        typeObjects.put(gameObject.getType(), tmpList);
+    public AbstractGameMap(GameCollection gameCollection) {
+        this.gameCollection = gameCollection;
     }
 
     public boolean isExitExist() {
@@ -100,19 +89,27 @@ public abstract class AbstractGameMap implements GameMap, Serializable { // Seri
         return goldManExist && exitExist; // если есть и вход и выход - карта валидна
     }
 
-    public ArrayList<AbstractGameObject> getGameObjects(GameObjectType type) {
-        return typeObjects.get(type);
+    public GameCollection getGameCollection() {
+        if (gameCollection == null) {
+            try {
+                throw new Exception("Game collection not initialized!");
+            } catch (Exception ex) {
+                Logger.getLogger(AbstractGameMap.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return gameCollection;
     }
 
-    public Collection<AbstractGameObject> getAllGameObjects() {
-        return gameObjects.values();
+    public void setGameCollection(GameCollection gameCollection) {
+        this.gameCollection = gameCollection;
     }
 
-    public AbstractGameObject getObjectByCoordinate(Coordinate coordinate) {
-        return gameObjects.get(coordinate);
-    }
-
-    public AbstractGameObject getObjectByCoordinate(int x, int y) {
-        return gameObjects.get(new Coordinate(x, y));
+    public void move(MovingDirection direction, GameObjectType gameObjectType) {
+        for (AbstractGameObject gameObject : getGameCollection().getGameObjects(gameObjectType)) {
+            if (gameObject instanceof AbstractMovingObject) {// дорогостоящая операция - instanceof
+                AbstractMovingObject movingObject = (AbstractMovingObject) gameObject;
+                movingObject.move(direction, this);
+            }
+        }
     }
 }

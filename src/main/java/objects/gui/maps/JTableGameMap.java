@@ -8,7 +8,8 @@ import objects.common.Coordinate;
 import objects.common.Nothing;
 import objects.common.Wall;
 import objects.creators.MapCreator;
-import objects.interfaces.DrawableMap;
+import objects.interfaces.collections.GameCollection;
+import objects.interfaces.gamemap.DrawableMap;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -26,7 +27,7 @@ public class JTableGameMap implements DrawableMap {
     // каждый элемент массива будет обозначаться согласно текстовому представлению объекта как описано в GameObjectType
     private AbstractGameObject[][] mapObjects;
 
-    public JTableGameMap(LocationType type, Object source) {
+    public JTableGameMap(LocationType type, Object source, GameCollection gameCollection) {
         jTableMap.setEnabled(false);
         jTableMap.setSize(new java.awt.Dimension(300, 300));
         jTableMap.setRowHeight(26);
@@ -37,7 +38,7 @@ public class JTableGameMap implements DrawableMap {
         jTableMap.setUpdateSelectionOnSort(false);
         jTableMap.setVerifyInputWhenFocusTarget(false);
 
-        gameMap = MapCreator.getInstance().createMap(type); //Реализация паттерна "Фабричный метод"
+        gameMap = MapCreator.getInstance().createMap(type, gameCollection); //Реализация паттерна "Фабричный метод"
         gameMap.loadMap(source);
     }
 
@@ -57,7 +58,7 @@ public class JTableGameMap implements DrawableMap {
         fillEmptyMap(gameMap.getWidth(), gameMap.getHeight());
 
         // потом заполнить массив объектами
-        for (AbstractGameObject gameObj : gameMap.getAllGameObjects()) {
+        for (AbstractGameObject gameObj : gameMap.getGameCollection().getAllGameObjects()) {
             if (!gameObj.getType().equals(GameObjectType.NOTHING)) {// пустоты не добавляем, т.к. они уже добавились когда мы вызвали метод fillEmptyMap()
                 int y = gameObj.getCoordinate().getY();
                 int x = gameObj.getCoordinate().getX();

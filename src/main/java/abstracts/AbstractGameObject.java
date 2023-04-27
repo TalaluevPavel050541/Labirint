@@ -3,7 +3,7 @@ package abstracts;
 
 import enums.GameObjectType;
 import objects.common.Coordinate;
-import objects.interfaces.StaticObject;
+import objects.interfaces.gameobjects.StaticObject;
 
 import javax.swing.*;
 import java.util.Objects;

@@ -5,6 +5,7 @@ import abstracts.AbstractGameObject;
 import enums.GameObjectType;
 import objects.common.Coordinate;
 import objects.creators.GameObjectCreator;
+import objects.interfaces.collections.GameCollection;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -17,6 +18,14 @@ import java.util.logging.Logger;
 
 public class FSGameMap extends AbstractGameMap {
 
+
+    public FSGameMap(){
+        super();
+    }
+
+    public FSGameMap(GameCollection gameCollection) {
+        super(gameCollection);
+    }
 
     @Override
     public boolean loadMap(Object source) {
@@ -38,7 +47,7 @@ public class FSGameMap extends AbstractGameMap {
             // разбиваем первую строку на токены, разделенные запятой.
             setName(strLine.split(",")[0]);
 
-            setTimeLimit(Integer.valueOf(strLine.split(",")[1]));
+            setTimeLimit(Integer.valueOf(strLine.split(",")[1]).intValue());
             setWidth(Integer.valueOf(strLine.split(",")[2]).intValue());
 
             int y = 0; // номер строки в массиве
@@ -72,11 +81,8 @@ public class FSGameMap extends AbstractGameMap {
     private void createGameObject(String str, Coordinate coordinate) {
 
         GameObjectType type = GameObjectType.valueOf(str.toUpperCase());
-
-        // реализация паттерна "Фабричный метод"
-        AbstractGameObject newObj = GameObjectCreator.getInstance().createObject(type, coordinate);
-
-        addGameObject(newObj);
+        AbstractGameObject newObj = GameObjectCreator.getInstance().createObject(type, coordinate); //реализация Фабричного метода
+        getGameCollection().addGameObject(newObj);
 
         if (newObj.getType() == GameObjectType.EXIT) {
             setExitExist(true);
@@ -84,6 +90,16 @@ public class FSGameMap extends AbstractGameMap {
             setGoldManExist(true);
         }
 
+    }
+
+    @Override
+    public boolean saveMap(Object source) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public boolean drawMap() {
+        return false;
     }
 
     private int getLineCount(File file) {
@@ -108,15 +124,5 @@ public class FSGameMap extends AbstractGameMap {
 
         return lineCount;
 
-    }
-
-    @Override
-    public boolean saveMap(Object source) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public boolean drawMap() {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

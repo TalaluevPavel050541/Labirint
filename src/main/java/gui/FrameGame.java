@@ -4,9 +4,7 @@ import abstracts.AbstractGameObject;
 import abstracts.AbstractMovingObject;
 import enums.GameObjectType;
 import enums.MovingDirection;
-import objects.interfaces.DrawableMap;
-import objects.interfaces.GameMap;
-import objects.maps.FSGameMap;
+import objects.interfaces.gamemap.DrawableMap;
 
 import javax.swing.*;
 import java.awt.*;
@@ -43,25 +41,25 @@ public class FrameGame extends BaseChildFrame implements ActionListener, KeyList
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel3 = new JPanel();
-        jPanelMap = new JPanel();
-        jPanel2 = new JPanel();
-        jbtnLeft = new JButton();
-        jbtnUp = new JButton();
-        jbtnRight = new JButton();
-        jbtnDown = new JButton();
-        jlabelScoreText = new JLabel();
-        jlabelTurnsLeftText = new JLabel();
-        jbtnSave = new JButton();
-        jbtnExit = new JButton();
-        jlabelScore = new JLabel();
-        jlabelTurnsLeft = new JLabel();
-        jMenuBar1 = new JMenuBar();
-        jmenuFile = new JMenu();
-        jMenuItem1 = new JMenuItem();
-        jMenuItem2 = new JMenuItem();
-        jMenu2 = new JMenu();
-        jMenuItem3 = new JMenuItem();
+        jPanel3 = new javax.swing.JPanel();
+        jPanelMap = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jbtnLeft = new javax.swing.JButton();
+        jbtnUp = new javax.swing.JButton();
+        jbtnRight = new javax.swing.JButton();
+        jbtnDown = new javax.swing.JButton();
+        jlabelScoreText = new javax.swing.JLabel();
+        jlabelTurnsLeftText = new javax.swing.JLabel();
+        jbtnSave = new javax.swing.JButton();
+        jbtnExit = new javax.swing.JButton();
+        jlabelScore = new javax.swing.JLabel();
+        jlabelTurnsLeft = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jmenuFile = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         setName("FrameGame"); // NOI18N
@@ -136,7 +134,7 @@ public class FrameGame extends BaseChildFrame implements ActionListener, KeyList
                                         .addComponent(jbtnDown, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
                                         .addGroup(jPanel2Layout.createSequentialGroup()
                                                 .addGap(46, 46, 46)
-                                                .addComponent(jbtnRight, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))))
+                                                .addComponent(jbtnRight, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -225,7 +223,7 @@ public class FrameGame extends BaseChildFrame implements ActionListener, KeyList
         );
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width - 534) / 2, (screenSize.height - 397) / 2, 534, 397);
+        setBounds((screenSize.width-534)/2, (screenSize.height-397)/2, 534, 397);
     }
 
     // Code for dispatching events from components to event handlers.
@@ -258,19 +256,19 @@ public class FrameGame extends BaseChildFrame implements ActionListener, KeyList
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbtnUpActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jbtnUpActionPerformed
-        moveGoldMan(MovingDirection.UP, GameObjectType.GOLDMAN);
+        moveObject(MovingDirection.UP, GameObjectType.GOLDMAN);
     }//GEN-LAST:event_jbtnUpActionPerformed
 
     private void jbtnLeftActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jbtnLeftActionPerformed
-        moveGoldMan(MovingDirection.LEFT, GameObjectType.GOLDMAN);
+        moveObject(MovingDirection.LEFT, GameObjectType.GOLDMAN);
     }//GEN-LAST:event_jbtnLeftActionPerformed
 
     private void jbtnDownActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jbtnDownActionPerformed
-        moveGoldMan(MovingDirection.DOWN, GameObjectType.GOLDMAN);
+        moveObject(MovingDirection.DOWN, GameObjectType.GOLDMAN);
     }//GEN-LAST:event_jbtnDownActionPerformed
 
     private void jbtnRightActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jbtnRightActionPerformed
-        moveGoldMan(MovingDirection.RIGHT, GameObjectType.GOLDMAN);
+        moveObject(MovingDirection.RIGHT, GameObjectType.GOLDMAN);
     }//GEN-LAST:event_jbtnRightActionPerformed
 
     private void jbtnSaveActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jbtnSaveActionPerformed
@@ -307,12 +305,9 @@ public class FrameGame extends BaseChildFrame implements ActionListener, KeyList
     private JLabel jlabelTurnsLeftText;
     private JMenu jmenuFile;
     // End of variables declaration//GEN-END:variables
-    private void moveGoldMan(MovingDirection movingDirection, GameObjectType gameObjectType) {
-        AbstractGameObject gameObject = gameMap.getGameMap().getGameObjects(gameObjectType).get(0);
 
-        if (gameObject instanceof AbstractMovingObject){
-            ((AbstractMovingObject)gameObject).move(movingDirection);
-            gameMap.drawMap();
-        }
+    private void moveObject(MovingDirection movingDirection, GameObjectType gameObjectType) {
+        gameMap.getGameMap().move(movingDirection, gameObjectType);
+        gameMap.drawMap();
     }
 }

@@ -1,4 +1,4 @@
-package objects.interfaces;
+package objects.interfaces.gamemap;
 
 import abstracts.AbstractGameMap;
 

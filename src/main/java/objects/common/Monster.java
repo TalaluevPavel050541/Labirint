@@ -14,21 +14,30 @@ public class Monster extends AbstractMovingObject {
         super.setType(GameObjectType.MONSTER);
         super.setCoordinate(coordinate);
 
-        super.setIconRight(getImageIcon("/images/monster_right.jpg"));
-        super.setIconLeft(getImageIcon("/images/monster_left.jpg"));
-        super.setIconUp(getImageIcon("/images/monster_up.jpg"));
-        super.setIconDown(getImageIcon("/images/monster_down.jpg"));
+        super.setIcon(getImageIcon("/images/monster_up.jpg"));// иконку по-умолчанию (можно сделать реализацию случайного выбора иконки)
 
-        super.setIcon(getIconLeft());// по-умолчанию будет использоваться эта иконка
     }
 
     @Override
-    public void move(MovingDirection direction) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void changeIcon(MovingDirection direction) {
+        switch (direction) {
+            case DOWN:
+                super.setIcon(getImageIcon("/images/monster_down.jpg"));
+                break;
+            case LEFT:
+                super.setIcon(getImageIcon("/images/monster_right.jpg"));
+                break;
+            case RIGHT:
+                super.setIcon(getImageIcon("/images/monster_right.jpg"));
+                break;
+            case UP:
+                super.setIcon(getImageIcon("/images/monster_up.jpg"));
+                break;
+        }
     }
 
-    @Override
-    public void getMoveResult(AbstractGameObject objectInNewCoordinate) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+
+
+
+
 }

@@ -2,6 +2,7 @@ package objects.creators;
 
 import abstracts.AbstractGameMap;
 import enums.LocationType;
+import objects.interfaces.collections.GameCollection;
 import objects.maps.FSGameMap;
 
 public class MapCreator {
@@ -15,12 +16,12 @@ public class MapCreator {
         return instance;
     }
 
-    public AbstractGameMap createMap(LocationType type) {
+    public AbstractGameMap createMap(LocationType type, GameCollection collection) {
         AbstractGameMap obj = null;
 
         switch (type) {
             case FS: {
-                obj = new FSGameMap();
+                obj = new FSGameMap(collection);
                 break;
             }
             case DB: {
@@ -29,7 +30,6 @@ public class MapCreator {
             }
             default:
                 throw new IllegalArgumentException("Can't create map type: " + type);
-
         }
 
         return obj;
