@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+// класс по загрузке карты с файловой системы
+
 public class FSGameMap extends AbstractGameMap {
 
 
@@ -36,7 +38,7 @@ public class FSGameMap extends AbstractGameMap {
             // разбиваем первую строку на токены, разделенные запятой.
             setName(strLine.split(",")[0]);
 
-            setTimeLimit(Integer.valueOf(strLine.split(",")[1]).intValue());
+            setTimeLimit(Integer.valueOf(strLine.split(",")[1]));
             setWidth(Integer.valueOf(strLine.split(",")[2]).intValue());
 
             int y = 0; // номер строки в массиве

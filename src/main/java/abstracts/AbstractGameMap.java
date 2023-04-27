@@ -6,6 +6,7 @@ import objects.interfaces.GameMap;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.EnumMap;
 import java.util.HashMap;
 
@@ -21,6 +22,7 @@ public abstract class AbstractGameMap implements GameMap, Serializable { // Seri
     private String name;
     private boolean exitExist;
     private boolean goldManExist;
+
     private HashMap<Coordinate, AbstractGameObject> gameObjects = new HashMap<>();// хранит все объекты с доступом по координатам
     private EnumMap<GameObjectType, ArrayList<AbstractGameObject>> typeObjects = new EnumMap<>(GameObjectType.class); // хранит список объектов для каждого типа
 
@@ -34,7 +36,6 @@ public abstract class AbstractGameMap implements GameMap, Serializable { // Seri
 
         tmpList.add(gameObject);
 
-        //заполнение коллекций
         gameObjects.put(gameObject.getCoordinate(), gameObject);
         typeObjects.put(gameObject.getType(), tmpList);
     }
@@ -99,11 +100,15 @@ public abstract class AbstractGameMap implements GameMap, Serializable { // Seri
         return goldManExist && exitExist; // если есть и вход и выход - карта валидна
     }
 
-    public ArrayList<AbstractGameObject> getList(GameObjectType type) {
+    public ArrayList<AbstractGameObject> getGameObjects(GameObjectType type) {
         return typeObjects.get(type);
     }
 
-    public AbstractGameObject getObjectByCoordinate(Coordinate coordinate) { //получает объект по координатам из коллекции
+    public Collection<AbstractGameObject> getAllGameObjects() {
+        return gameObjects.values();
+    }
+
+    public AbstractGameObject getObjectByCoordinate(Coordinate coordinate) {
         return gameObjects.get(coordinate);
     }
 
