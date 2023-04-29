@@ -2,7 +2,7 @@ package objects.creators;
 
 import abstracts.AbstractGameMap;
 import enums.LocationType;
-import objects.interfaces.collections.GameCollection;
+import interfaces.collections.GameCollection;
 import objects.maps.FSGameMap;
 
 public class MapCreator {

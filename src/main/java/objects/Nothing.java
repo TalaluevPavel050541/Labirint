@@ -1,8 +1,8 @@
-package objects.common;
+package objects;
 
 import abstracts.AbstractGameObject;
 import enums.GameObjectType;
-
+import objects.Coordinate;
 
 
 /**

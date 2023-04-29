@@ -1,9 +1,9 @@
-package objects.common;
+package objects;
 
-import abstracts.AbstractGameObject;
 import abstracts.AbstractMovingObject;
 import enums.GameObjectType;
 import enums.MovingDirection;
+import objects.Coordinate;
 
 /**
  * класс отвечает за работу объекта MONSTER

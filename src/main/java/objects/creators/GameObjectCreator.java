@@ -2,7 +2,7 @@ package objects.creators;
 
 import abstracts.AbstractGameObject;
 import enums.GameObjectType;
-import objects.common.*;
+import objects.*;
 
 public class GameObjectCreator {
     // Используется паттерн Singleton - используем единственный

@@ -4,12 +4,12 @@ import abstracts.AbstractGameMap;
 import abstracts.AbstractGameObject;
 import enums.GameObjectType;
 import enums.LocationType;
-import objects.common.Coordinate;
-import objects.common.Nothing;
-import objects.common.Wall;
+import objects.Coordinate;
+import objects.Nothing;
+import objects.Wall;
 import objects.creators.MapCreator;
-import objects.interfaces.collections.GameCollection;
-import objects.interfaces.gamemap.DrawableMap;
+import interfaces.collections.GameCollection;
+import interfaces.gamemap.DrawableMap;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

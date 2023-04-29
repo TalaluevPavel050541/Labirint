@@ -2,8 +2,8 @@ package abstracts;
 
 
 import enums.GameObjectType;
-import objects.common.Coordinate;
-import objects.interfaces.gameobjects.StaticObject;
+import objects.Coordinate;
+import interfaces.gameobjects.StaticObject;
 
 import javax.swing.*;
 import java.util.Objects;

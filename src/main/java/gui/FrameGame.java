@@ -1,10 +1,11 @@
 package gui;
 
-import abstracts.AbstractGameObject;
-import abstracts.AbstractMovingObject;
+import enums.ActionResult;
 import enums.GameObjectType;
 import enums.MovingDirection;
-import objects.interfaces.gamemap.DrawableMap;
+import interfaces.gamemap.DrawableMap;
+import objects.GoldMan;
+import utils.MessageManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,10 +29,10 @@ public class FrameGame extends BaseChildFrame implements ActionListener, KeyList
         this.gameMap = gameMap;
         gameMap.drawMap();
 
+        jlabelTurnsLeft.setText(String.valueOf(gameMap.getGameMap().getTimeLimit()));
         jPanelMap.removeAll();
         jPanelMap.add(gameMap.getMapComponent());
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -307,7 +308,31 @@ public class FrameGame extends BaseChildFrame implements ActionListener, KeyList
     // End of variables declaration//GEN-END:variables
 
     private void moveObject(MovingDirection movingDirection, GameObjectType gameObjectType) {
-        gameMap.getGameMap().move(movingDirection, gameObjectType);
+        ActionResult result = gameMap.getGameMap().move(movingDirection, gameObjectType);
+
+        if (result == ActionResult.DIE) {
+            gameOver();
+            return;
+        }
+
         gameMap.drawMap();
+
+        if (gameObjectType == GameObjectType.GOLDMAN) {
+            GoldMan goldMan = (GoldMan) gameMap.getGameMap().getGameCollection().getGameObjects(gameObjectType).get(0);
+
+            if (goldMan.getTurnsNumber() >= gameMap.getGameMap().getTimeLimit()) {
+                gameOver();
+                return;
+            }
+
+            jlabelScore.setText(String.valueOf(goldMan.getTotalScore()));
+            jlabelTurnsLeft.setText(String.valueOf(gameMap.getGameMap().getTimeLimit() - goldMan.getTurnsNumber()));
+
+        }
+    }
+
+    private void gameOver() {
+        MessageManager.showInformMessage(null, "Вы проиграли!");
+        closeFrame();
     }
 }

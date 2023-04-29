@@ -1,9 +1,11 @@
-package objects.common;
+package objects;
 
 import abstracts.AbstractGameObject;
 import abstracts.AbstractMovingObject;
+import enums.ActionResult;
 import enums.GameObjectType;
 import enums.MovingDirection;
+import objects.Coordinate;
 
 /**
  * класс отвечает за работу объекта GOLDMAN - главный персонаж игры
@@ -51,5 +53,25 @@ public class GoldMan extends AbstractMovingObject {
                 super.setIcon(getImageIcon("/images/goldman_up.png"));
                 break;
         }
+    }
+
+    @Override
+    public ActionResult doAction(AbstractGameObject gameObject) {
+
+        turnsNumber++;
+
+        switch (gameObject.getType()) {
+
+            case TREASURE: {
+                totalScore += ((Treasure) gameObject).getScore();
+                return ActionResult.COLLECT_TREASURE;
+            }
+
+            case MONSTER: {
+                return ActionResult.DIE;
+            }
+        }
+
+        return super.doAction(gameObject);
     }
 }

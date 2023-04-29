@@ -3,7 +3,7 @@ package gui;
 
 import enums.LocationType;
 import objects.gui.maps.JTableGameMap;
-import objects.interfaces.gamemap.MapCollection;
+import interfaces.gamemap.MapCollection;
 
 public class FrameMainMenu extends BaseChildFrame {
     private FrameGame frameGame = new FrameGame();
@@ -147,7 +147,7 @@ public class FrameMainMenu extends BaseChildFrame {
         if (frameGame==null){
             frameGame = new FrameGame();
         }
-        frameGame.setMap(gameMap);
+        frameGame.setMap(new JTableGameMap(LocationType.FS, "game.map", new MapCollection()));
         frameGame.showFrame(this);
     }//GEN-LAST:event_jbtnNewGameActionPerformed
 

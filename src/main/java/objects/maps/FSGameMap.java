@@ -3,9 +3,9 @@ package objects.maps;
 import abstracts.AbstractGameMap;
 import abstracts.AbstractGameObject;
 import enums.GameObjectType;
-import objects.common.Coordinate;
+import objects.Coordinate;
 import objects.creators.GameObjectCreator;
-import objects.interfaces.collections.GameCollection;
+import interfaces.collections.GameCollection;
 
 import java.io.BufferedReader;
 import java.io.File;

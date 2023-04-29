@@ -1,9 +1,10 @@
 package abstracts;
 
+import enums.ActionResult;
 import enums.GameObjectType;
 import enums.MovingDirection;
-import objects.interfaces.collections.GameCollection;
-import objects.interfaces.gamemap.GameMap;
+import interfaces.collections.GameCollection;
+import interfaces.gamemap.GameMap;
 import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -104,12 +105,8 @@ public abstract class AbstractGameMap implements GameMap, Serializable { // Seri
         this.gameCollection = gameCollection;
     }
 
-    public void move(MovingDirection direction, GameObjectType gameObjectType) {
-        for (AbstractGameObject gameObject : getGameCollection().getGameObjects(gameObjectType)) {
-            if (gameObject instanceof AbstractMovingObject) {// дорогостоящая операция - instanceof
-                AbstractMovingObject movingObject = (AbstractMovingObject) gameObject;
-                movingObject.move(direction, this);
-            }
-        }
+    public ActionResult move(MovingDirection direction, GameObjectType gameObjectType) {
+        return getGameCollection().moveObject(direction, gameObjectType);
+
     }
 }

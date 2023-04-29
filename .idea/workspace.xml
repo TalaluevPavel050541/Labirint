@@ -4,38 +4,35 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bfae40e8-9e96-49c1-a787-8cd4798ebe61" name="Changes" comment="Add labs_3-4">
-      <change afterPath="$PROJECT_DIR$/src/main/java/gui/BaseChildFrame.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/gui/FrameGame.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/gui/FrameMainMenu.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/gui/FrameSavedGames.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/gui/FrameStat.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/delete.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/down.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/exit.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/exit.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/gold.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/goldman_down.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/goldman_left.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/goldman_right.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/goldman_up.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/left.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/load.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/load_small.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/monster_down.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/monster_left.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/monster_right.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/monster_up.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/new.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/noicon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/right.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/save.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/search.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/stat.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/up.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/wait.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/wall.png" afterDir="false" />
+    <list default="true" id="bfae40e8-9e96-49c1-a787-8cd4798ebe61" name="Changes" comment="movement of objects">
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_26_04_2023_15_42_[Changes]/shelved.patch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_26_04_2023_15_42__Changes_.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/interfaces/gamemap/MapCollection.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/abstracts/AbstractGameMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/abstracts/AbstractGameMap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/abstracts/AbstractGameObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/abstracts/AbstractGameObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/abstracts/AbstractMovingObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/abstracts/AbstractMovingObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gui/FrameGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/FrameGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gui/FrameMainMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/FrameMainMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/objects/common/Coordinate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/objects/Coordinate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/objects/common/Exit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/objects/Exit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/objects/common/GoldMan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/objects/GoldMan.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/objects/common/Monster.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/objects/Monster.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/objects/common/Nothing.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/objects/Nothing.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/objects/common/Treasure.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/objects/Treasure.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/objects/common/Wall.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/objects/Wall.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/objects/creators/GameObjectCreator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/objects/creators/GameObjectCreator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/objects/creators/MapCreator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/objects/creators/MapCreator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/objects/gui/maps/JTableGameMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/objects/gui/maps/JTableGameMap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/objects/interfaces/collections/GameCollection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/interfaces/collections/GameCollection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/objects/interfaces/gamemap/DrawableMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/interfaces/gamemap/DrawableMap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/objects/interfaces/gamemap/GameMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/interfaces/gamemap/GameMap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/objects/interfaces/gamemap/MapCollection.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/objects/interfaces/gameobjects/GameObjectMoveListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/objects/interfaces/gameobjects/MoveListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/objects/interfaces/gameobjects/MovingObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/interfaces/gameobjects/MovingObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/objects/interfaces/gameobjects/StaticObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/interfaces/gameobjects/StaticObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/objects/maps/FSGameMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/objects/maps/FSGameMap.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/archetype-resources/src/main/java/App.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/archetype-resources/src/test/java/AppTest.java" beforeDir="false" />
     </list>
@@ -47,9 +44,10 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Enum" />
         <option value="JavaFXApplication" />
         <option value="Class" />
+        <option value="Interface" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -76,7 +74,7 @@
     &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH&quot;: &quot;288&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;1.8&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/IdeaProjects_2023/Labirint/src/main/java&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/IdeaProjects_2023/Labirint&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
@@ -85,14 +83,20 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\IdeaProjects_2023\Labirint" />
       <recent name="D:\IdeaProjects_2023\Labirint\src\main\java" />
       <recent name="D:\IdeaProjects_2023\Labirint\src\main\resources\labs" />
       <recent name="D:\IdeaProjects_2023\Labirint\src\main\resources" />
       <recent name="D:\IdeaProjects_2023\Labirint\src\main\java\objects\common" />
-      <recent name="D:\IdeaProjects_2023\Labirint\src\main\java\objects\interfaces" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\IdeaProjects_2023\Labirint\src\main\resources" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="utils" />
     </key>
   </component>
   <component name="RunManager">
@@ -134,7 +138,10 @@
       <workItem from="1681789585822" duration="5629000" />
       <workItem from="1682336743693" duration="2040000" />
       <workItem from="1682416463600" duration="1749000" />
-      <workItem from="1682510808866" duration="1979000" />
+      <workItem from="1682510808866" duration="4582000" />
+      <workItem from="1682581175737" duration="19973000" />
+      <workItem from="1682694181357" duration="1264000" />
+      <workItem from="1682757680104" duration="3722000" />
     </task>
     <task id="LOCAL-00001" summary="Add lab_2 pdf file">
       <created>1681664884831</created>
@@ -157,7 +164,49 @@
       <option name="project" value="LOCAL" />
       <updated>1681796242984</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Create GUI">
+      <created>1682512870891</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1682512870891</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Creating objects">
+      <created>1682516972730</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1682516972730</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Creating map">
+      <created>1682591616832</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1682591616833</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Creating map display">
+      <created>1682599914507</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1682599914507</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Creating map display">
+      <created>1682599961445</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1682599961445</updated>
+    </task>
+    <task id="LOCAL-00009" summary="movement of objects">
+      <created>1682617768508</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1682617768508</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -178,6 +227,11 @@
     <MESSAGE value="Add lab_2 pdf file" />
     <MESSAGE value="commit" />
     <MESSAGE value="Add labs_3-4" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add labs_3-4" />
+    <MESSAGE value="Create GUI" />
+    <MESSAGE value="Creating objects" />
+    <MESSAGE value="Creating map" />
+    <MESSAGE value="Creating map display" />
+    <MESSAGE value="movement of objects" />
+    <option name="LAST_COMMIT_MESSAGE" value="movement of objects" />
   </component>
 </project>

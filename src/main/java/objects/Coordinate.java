@@ -1,4 +1,4 @@
-package objects.common;
+package objects;
 
 import java.io.Serializable;
 

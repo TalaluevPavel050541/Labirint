@@ -2,13 +2,12 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package objects.interfaces.gameobjects;
+package interfaces.gameobjects;
 
-import abstracts.AbstractGameMap;
+import enums.ActionResult;
 import enums.MovingDirection;
 import abstracts.AbstractGameObject;
 
-import javax.swing.*;
 
 /**
  *
@@ -16,7 +15,7 @@ import javax.swing.*;
  */
 public interface MovingObject extends StaticObject {
 
-    void move(MovingDirection direction, AbstractGameMap abstractGameMap);
+    ActionResult moveToObject(MovingDirection direction, AbstractGameObject gameObject);
 
     int getStep();
    
