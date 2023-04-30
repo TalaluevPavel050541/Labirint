@@ -2,12 +2,12 @@ package objects.gui.maps;
 
 import abstracts.AbstractGameMap;
 import abstracts.AbstractGameObject;
+import abstracts.AbstractMovingObject;
 import enums.ActionResult;
 import enums.GameObjectType;
 import enums.LocationType;
 import movestrategies.AgressiveMoving;
 import objects.Coordinate;
-import objects.GoldMan;
 import objects.Nothing;
 import objects.Wall;
 import objects.creators.MapCreator;
@@ -153,7 +153,7 @@ public class JTableGameMap implements DrawableMap {
         }
 
         @Override
-        public void notifyActionResult(ActionResult actionResult, GoldMan goldMan) {
+        public void notifyActionResult(ActionResult actionResult, AbstractMovingObject movingObject) {
             switch (actionResult){
                 case DIE: case WIN:{
                     timer.stop();

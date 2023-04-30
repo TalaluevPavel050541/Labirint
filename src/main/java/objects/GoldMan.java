@@ -5,11 +5,12 @@ import abstracts.AbstractMovingObject;
 import enums.ActionResult;
 import enums.GameObjectType;
 import enums.MovingDirection;
+import objects.sound.SoundObject;
 
 /**
  * класс отвечает за работу объекта GOLDMAN - главный персонаж игры
  */
-public class GoldMan extends AbstractMovingObject {
+public class GoldMan extends AbstractMovingObject implements SoundObject {
 
     private int totalScore = 0;// кол-во очков, собранных игроком
     private int turnsNumber = 0;// кол-во сделанных ходов
@@ -78,5 +79,16 @@ public class GoldMan extends AbstractMovingObject {
         }
 
         return super.doAction(gameObject);
+    }
+
+    @Override
+    public String getSoundPath(ActionResult actionResult) {
+        switch (actionResult) {
+            case COLLECT_TREASURE: return "treasure.wav";
+            case DIE: return "die.wav";
+            case WIN: return "win.wav";
+        }
+
+        return null;
     }
 }

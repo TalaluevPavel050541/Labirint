@@ -12,6 +12,7 @@ import objects.Nothing;
 import objects.Wall;
 import objects.listeners.MapListenersRegistrator;
 import objects.listeners.MoveResultListener;
+import objects.sound.WavPlayer;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -23,6 +24,9 @@ public class MapCollection extends MapListenersRegistrator {// объекты д
     private HashMap<Coordinate, AbstractGameObject> gameObjects = new HashMap<>();// хранит все объекты с доступом по координатам
     private EnumMap<GameObjectType, ArrayList<AbstractGameObject>> typeObjects = new EnumMap<>(GameObjectType.class); // хранит список объектов для каждого типа
 
+    public MapCollection() {
+        addMoveListener(new WavPlayer());
+    }
     @Override
     public List<AbstractGameObject> getAllGameObjects() {
         return new ArrayList(gameObjects.values());// ! узкое место - каждый раз создается новая коллекция

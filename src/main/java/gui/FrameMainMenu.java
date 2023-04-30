@@ -4,9 +4,12 @@ package gui;
 import enums.LocationType;
 import interfaces.gamemap.collections.MapCollection;
 import objects.gui.maps.JTableGameMap;
+import objects.sound.WavPlayer;
+
+import javax.swing.*;
 
 
-public class FrameMainMenu extends BaseChildFrame {
+public class FrameMainMenu extends JFrame {
 
     private FrameGame frameGame;
     private FrameStat frameStat = new FrameStat();
@@ -147,7 +150,7 @@ public class FrameMainMenu extends BaseChildFrame {
         if (frameGame==null){
             frameGame = new FrameGame();
         }
-        frameGame.setMap(new JTableGameMap(LocationType.FS, "game.map", new MapCollection()));
+        frameGame.setMap(new JTableGameMap(LocationType.FS, "game.map", new MapCollection()), new WavPlayer());
         frameGame.showFrame(this);
     }//GEN-LAST:event_jbtnNewGameActionPerformed
 

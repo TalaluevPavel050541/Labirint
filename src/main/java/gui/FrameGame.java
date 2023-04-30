@@ -1,23 +1,24 @@
 package gui;
 
+import abstracts.AbstractMovingObject;
 import enums.ActionResult;
 import enums.GameObjectType;
 import enums.MovingDirection;
 import interfaces.gamemap.DrawableMap;
 import objects.GoldMan;
 import objects.listeners.MoveResultListener;
+import objects.sound.SoundPlayer;
 import utils.MessageManager;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class FrameGame extends BaseChildFrame implements ActionListener, KeyListener, MoveResultListener {
 
     private DrawableMap map; // передаем объект карты, которая умеет себя рисовать
+    private SoundPlayer soundPlayer;
 
     /**
      * Creates new form FrameGame
@@ -26,9 +27,12 @@ public class FrameGame extends BaseChildFrame implements ActionListener, KeyList
         initComponents();
     }
 
-    public void setMap(DrawableMap gameMap) {
+    public void setMap(DrawableMap gameMap, SoundPlayer soundPlayer) {
         this.map = gameMap;
         gameMap.drawMap();
+
+        this.soundPlayer = soundPlayer;
+        this.soundPlayer.startBackgroundMusic("background.wav");
 
         gameMap.getGameMap().getGameCollection().addMoveListener(this); //паттерн Наблюдатель - добавление слушателя
 
@@ -232,82 +236,85 @@ public class FrameGame extends BaseChildFrame implements ActionListener, KeyList
 
     // Code for dispatching events from components to event handlers.
 
-    public void actionPerformed(ActionEvent evt) {
+    public void actionPerformed(java.awt.event.ActionEvent evt) {
         if (evt.getSource() == jbtnLeft) {
             FrameGame.this.jbtnLeftActionPerformed(evt);
-        } else if (evt.getSource() == jbtnUp) {
+        }
+        else if (evt.getSource() == jbtnUp) {
             FrameGame.this.jbtnUpActionPerformed(evt);
-        } else if (evt.getSource() == jbtnRight) {
+        }
+        else if (evt.getSource() == jbtnRight) {
             FrameGame.this.jbtnRightActionPerformed(evt);
-        } else if (evt.getSource() == jbtnDown) {
+        }
+        else if (evt.getSource() == jbtnDown) {
             FrameGame.this.jbtnDownActionPerformed(evt);
-        } else if (evt.getSource() == jbtnSave) {
+        }
+        else if (evt.getSource() == jbtnSave) {
             FrameGame.this.jbtnSaveActionPerformed(evt);
-        } else if (evt.getSource() == jbtnExit) {
+        }
+        else if (evt.getSource() == jbtnExit) {
             FrameGame.this.jbtnExitActionPerformed(evt);
         }
     }
 
-    public void keyPressed(KeyEvent evt) {
+    public void keyPressed(java.awt.event.KeyEvent evt) {
         if (evt.getSource() == FrameGame.this) {
             FrameGame.this.formKeyPressed(evt);
         }
     }
 
-    public void keyReleased(KeyEvent evt) {
+    public void keyReleased(java.awt.event.KeyEvent evt) {
     }
-    public void keyTyped(KeyEvent evt) {
+
+    public void keyTyped(java.awt.event.KeyEvent evt) {
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jbtnUpActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jbtnUpActionPerformed
+    private void jbtnUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnUpActionPerformed
         moveObject(MovingDirection.UP, GameObjectType.GOLDMAN);
     }//GEN-LAST:event_jbtnUpActionPerformed
 
-    private void jbtnLeftActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jbtnLeftActionPerformed
+    private void jbtnLeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnLeftActionPerformed
         moveObject(MovingDirection.LEFT, GameObjectType.GOLDMAN);
     }//GEN-LAST:event_jbtnLeftActionPerformed
 
-    private void jbtnDownActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jbtnDownActionPerformed
+    private void jbtnDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnDownActionPerformed
         moveObject(MovingDirection.DOWN, GameObjectType.GOLDMAN);
     }//GEN-LAST:event_jbtnDownActionPerformed
 
-    private void jbtnRightActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jbtnRightActionPerformed
+    private void jbtnRightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnRightActionPerformed
         moveObject(MovingDirection.RIGHT, GameObjectType.GOLDMAN);
     }//GEN-LAST:event_jbtnRightActionPerformed
 
-    private void jbtnSaveActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jbtnSaveActionPerformed
+    private void jbtnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnSaveActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jbtnSaveActionPerformed
 
-    private void jbtnExitActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jbtnExitActionPerformed
+    private void jbtnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnExitActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jbtnExitActionPerformed
 
-    private void formKeyPressed(KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
-        System.out.println(evt.getKeyCode());
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
     }//GEN-LAST:event_formKeyPressed
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private JMenu jMenu2;
-    private JMenuBar jMenuBar1;
-    private JMenuItem jMenuItem1;
-    private JMenuItem jMenuItem2;
-    private JMenuItem jMenuItem3;
-    private JPanel jPanel2;
-    private JPanel jPanel3;
-    private JPanel jPanelMap;
-    private JButton jbtnDown;
-    private JButton jbtnExit;
-    private JButton jbtnLeft;
-    private JButton jbtnRight;
-    private JButton jbtnSave;
-    private JButton jbtnUp;
-    private JLabel jlabelScore;
-    private JLabel jlabelScoreText;
-    private JLabel jlabelTurnsLeft;
-    private JLabel jlabelTurnsLeftText;
-    private JMenu jmenuFile;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanelMap;
+    private javax.swing.JButton jbtnDown;
+    private javax.swing.JButton jbtnExit;
+    private javax.swing.JButton jbtnLeft;
+    private javax.swing.JButton jbtnRight;
+    private javax.swing.JButton jbtnSave;
+    private javax.swing.JButton jbtnUp;
+    private javax.swing.JLabel jlabelScore;
+    private javax.swing.JLabel jlabelScoreText;
+    private javax.swing.JLabel jlabelTurnsLeft;
+    private javax.swing.JLabel jlabelTurnsLeftText;
+    private javax.swing.JMenu jmenuFile;
     // End of variables declaration//GEN-END:variables
 
     private void moveObject(MovingDirection movingDirection, GameObjectType gameObjectType) {
@@ -318,16 +325,30 @@ public class FrameGame extends BaseChildFrame implements ActionListener, KeyList
         MessageManager.showInformMessage(null, message);
         closeFrame();
     }
-
-
-    private static final String DIE_MESSAGE="Вы проиграли!";
-    private static final String WIN_MESSAGE="Вы выиграли! Количество очков:";
+    private static final String DIE_MESSAGE = "Вы проиграли!";
+    private static final String WIN_MESSAGE = "Вы выиграли! Количество очков:";
 
     @Override
-    public void notifyActionResult(ActionResult actionResult, GoldMan goldMan) {
+    public void notifyActionResult(ActionResult actionResult, AbstractMovingObject movingObject) {
 
+        if (movingObject.getType().equals(GameObjectType.GOLDMAN)) {
+            GoldMan goldMan = (GoldMan) movingObject;
+            checkGoldManActions(actionResult, goldMan);
+        }
+
+
+        checkCommonActions(actionResult);
+
+
+
+        map.drawMap();
+
+    }
+
+    private void checkGoldManActions(ActionResult actionResult, GoldMan goldMan) {
         switch (actionResult) {
             case MOVE: {
+
                 jlabelTurnsLeft.setText(String.valueOf(map.getGameMap().getTimeLimit() - goldMan.getTurnsNumber()));
 
                 if (goldMan.getTurnsNumber() >= map.getGameMap().getTimeLimit()) {
@@ -337,13 +358,9 @@ public class FrameGame extends BaseChildFrame implements ActionListener, KeyList
                 break;
             }
 
-            case DIE: {
-                gameFinished(DIE_MESSAGE);
-                break;
-            }
-
-            case WIN:{
-                gameFinished(WIN_MESSAGE+goldMan.getTotalScore());
+            case WIN: {
+                gameFinished(WIN_MESSAGE + goldMan.getTotalScore());
+                soundPlayer.stopBackgoundMusic();
             }
 
 
@@ -351,8 +368,27 @@ public class FrameGame extends BaseChildFrame implements ActionListener, KeyList
                 jlabelScore.setText(String.valueOf(goldMan.getTotalScore()));
                 break;
             }
+
         }
 
-        map.drawMap();
+    }
+
+    private void checkCommonActions(ActionResult actionResult) {
+        switch (actionResult) {
+
+            case DIE: {
+                gameFinished(DIE_MESSAGE);
+                soundPlayer.stopBackgoundMusic();
+                break;
+            }
+        }
+
+    }
+
+    @Override
+    protected void closeFrame() {
+        super.closeFrame();
+        soundPlayer.stopBackgoundMusic();
     }
 }
+
