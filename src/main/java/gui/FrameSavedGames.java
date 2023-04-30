@@ -60,7 +60,6 @@ public class FrameSavedGames extends BaseChildFrame {
 
         jbtnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/delete.png"))); // NOI18N
         jbtnDelete.setText("Удалить");
-        jbtnDelete.setActionCommand("Удалить");
         jbtnDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnDeleteActionPerformed(evt);

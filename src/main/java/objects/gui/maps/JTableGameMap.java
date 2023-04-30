@@ -2,26 +2,30 @@ package objects.gui.maps;
 
 import abstracts.AbstractGameMap;
 import abstracts.AbstractGameObject;
+import enums.ActionResult;
 import enums.GameObjectType;
 import enums.LocationType;
+import movestrategies.AgressiveMoving;
 import objects.Coordinate;
+import objects.GoldMan;
 import objects.Nothing;
 import objects.Wall;
 import objects.creators.MapCreator;
-import interfaces.collections.GameCollection;
+import interfaces.gamemap.collections.GameCollection;
 import interfaces.gamemap.DrawableMap;
+import objects.listeners.MoveResultListener;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class JTableGameMap implements DrawableMap {
 
     private JTable jTableMap = new JTable();
-
     private AbstractGameMap gameMap;
-
     private String[] columnNames;
     // объекты для отображения на карте будут храниться в двумерном массиве типа AbstractGameObject
     // каждый элемент массива будет обозначаться согласно текстовому представлению объекта как описано в GameObjectType
@@ -40,7 +44,10 @@ public class JTableGameMap implements DrawableMap {
 
         gameMap = MapCreator.getInstance().createMap(type, gameCollection); //Реализация паттерна "Фабричный метод"
         gameMap.loadMap(source);
+
+        timeMover = new TimeMover();
     }
+
 
     private void fillEmptyMap(int width, int height) {
         for (int y = 0; y < height; y++) {
@@ -49,7 +56,6 @@ public class JTableGameMap implements DrawableMap {
             }
         }
     }
-
 
     private void updateObjectsArray() {
 
@@ -115,4 +121,46 @@ public class JTableGameMap implements DrawableMap {
     public AbstractGameMap getGameMap() {
         return gameMap;
     }
+
+
+
+    private TimeMover timeMover;
+
+    private class TimeMover implements ActionListener, MoveResultListener {
+
+        private Timer timer;
+        private final static int MOVING_PAUSE = 500;
+        private final static int INIT_PAUSE = 1000;
+
+        private TimeMover() {
+            timer = new Timer(MOVING_PAUSE, this);
+            timer.setInitialDelay(INIT_PAUSE);
+            timer.start();
+            gameMap.getGameCollection().addMoveListener(this); //использование паттерна Наблюдатель
+        }
+
+        public void start() {
+            timer.start();
+        }
+
+        public void stop() {
+            timer.stop();
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            gameMap.getGameCollection().moveObject(new AgressiveMoving(), GameObjectType.MONSTER); //выбор агрессивной стратегии для движения монстра
+        }
+
+        @Override
+        public void notifyActionResult(ActionResult actionResult, GoldMan goldMan) {
+            switch (actionResult){
+                case DIE: case WIN:{
+                    timer.stop();
+                    break;
+                }
+            }
+        }
+    }
+
 }

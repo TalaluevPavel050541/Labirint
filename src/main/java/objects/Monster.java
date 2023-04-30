@@ -1,9 +1,10 @@
 package objects;
 
+import abstracts.AbstractGameObject;
 import abstracts.AbstractMovingObject;
+import enums.ActionResult;
 import enums.GameObjectType;
 import enums.MovingDirection;
-import objects.Coordinate;
 
 /**
  * класс отвечает за работу объекта MONSTER
@@ -36,7 +37,24 @@ public class Monster extends AbstractMovingObject {
         }
     }
 
+    public ActionResult doAction(AbstractGameObject gameObject) {
 
+        switch (gameObject.getType()) {
+
+
+            case TREASURE:
+            case MONSTER: { // монстр не может наступать на сокровище и на других монстров
+                return ActionResult.NO_ACTION;
+            }
+
+            case GOLDMAN: {
+                return ActionResult.DIE;
+            }
+
+        }
+
+        return super.doAction(gameObject);
+    }
 
 
 

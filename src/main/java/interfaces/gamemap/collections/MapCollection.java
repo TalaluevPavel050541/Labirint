@@ -1,20 +1,24 @@
-package interfaces.gamemap;
+package interfaces.gamemap.collections;
 
 import abstracts.AbstractGameObject;
 import abstracts.AbstractMovingObject;
 import enums.ActionResult;
 import enums.GameObjectType;
 import enums.MovingDirection;
+import movestrategies.MoveStrategy;
 import objects.Coordinate;
+import objects.GoldMan;
 import objects.Nothing;
-import interfaces.collections.GameCollection;
+import objects.Wall;
+import objects.listeners.MapListenersRegistrator;
+import objects.listeners.MoveResultListener;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 
-public class MapCollection implements GameCollection {// объекты для карты, которые умеют уведомлять всех слушателей о своих ходах
+public class MapCollection extends MapListenersRegistrator {// объекты для карты, которые умеют уведомлять всех слушателей о своих ходах
 
     private HashMap<Coordinate, AbstractGameObject> gameObjects = new HashMap<>();// хранит все объекты с доступом по координатам
     private EnumMap<GameObjectType, ArrayList<AbstractGameObject>> typeObjects = new EnumMap<>(GameObjectType.class); // хранит список объектов для каждого типа
@@ -31,7 +35,11 @@ public class MapCollection implements GameCollection {// объекты для �
 
     @Override
     public AbstractGameObject getObjectByCoordinate(Coordinate coordinate) {
-        return gameObjects.get(coordinate);
+        AbstractGameObject gameObject = gameObjects.get(coordinate);
+        if (gameObject == null){// край карты
+            gameObject = new Wall(coordinate);
+        }
+        return gameObject;
     }
 
     @Override
@@ -56,7 +64,18 @@ public class MapCollection implements GameCollection {// объекты для �
     }
 
     @Override
-    public ActionResult moveObject(MovingDirection direction, GameObjectType gameObjectType) {
+    public void moveObject(MovingDirection direction, GameObjectType gameObjectType) {
+        doMoveAction(direction, gameObjectType, null);// движение по направлению (без стратегии)
+    }
+
+
+    @Override
+    public void moveObject(MoveStrategy moveStrategy, GameObjectType gameObjectType) {
+        doMoveAction(null, gameObjectType, moveStrategy);// движение по стратегии
+    }
+
+    private void doMoveAction(MovingDirection direction, GameObjectType gameObjectType, MoveStrategy moveStrategy){
+        GoldMan goldMan = (GoldMan) getGameObjects(GameObjectType.GOLDMAN).get(0);
 
         ActionResult actionResult = null;
 
@@ -64,7 +83,11 @@ public class MapCollection implements GameCollection {// объекты для �
             if (gameObject instanceof AbstractMovingObject) {// дорогостоящая операция - instanceof
                 AbstractMovingObject movingObject = (AbstractMovingObject) gameObject;
 
-                Coordinate newCoordinate = getNewCoordinate(direction, movingObject);
+                if (moveStrategy!=null){// если указана стратегия движения - то берем наравления оттуда
+                    direction = moveStrategy.getDirection(movingObject, goldMan, this); //паттерн Стратегия
+                }
+
+                Coordinate newCoordinate = movingObject.getDirectionCoordinate(direction);
 
                 AbstractGameObject objectInNewCoordinate = getObjectByCoordinate(newCoordinate);
 
@@ -80,13 +103,17 @@ public class MapCollection implements GameCollection {// объекты для �
                         break;
                     }
 
+                    case WIN:
+                    case DIE: {
+                        break;
+                    }
+
                 }
+
             }
 
-
+            notifyMoveListeners(actionResult, goldMan); //реализация паттерна Наблюдатель
         }
-
-        return actionResult;
     }
 
     private void swapObjects(AbstractGameObject obj1, AbstractGameObject obj2) {
@@ -104,35 +131,10 @@ public class MapCollection implements GameCollection {// объекты для �
         obj2.setCoordinate(tmpCoordinate);
     }
 
-    private Coordinate getNewCoordinate(MovingDirection direction, AbstractMovingObject movingObject) {
-
-        // берем текущие координаты объекта, которые нужно передвинуть (индексы начинаются с нуля)
-        int x = movingObject.getCoordinate().getX();
-        int y = movingObject.getCoordinate().getY();
-
-
-        Coordinate newCoordinate = new Coordinate(x, y);
-
-
-        switch (direction) {// определяем, в каком направлении нужно двигаться
-            case UP: {
-                newCoordinate.setY(y - movingObject.getStep());
-                break;
-            }
-            case DOWN: {
-                newCoordinate.setY(y + movingObject.getStep());
-                break;
-            }
-            case LEFT: {
-                newCoordinate.setX(x - movingObject.getStep());
-                break;
-            }
-            case RIGHT: {
-                newCoordinate.setX(x + movingObject.getStep());
-                break;
-            }
+    @Override //уведомление всех слушателей
+    public void notifyMoveListeners(ActionResult actionResult, GoldMan goldMan) {
+        for (MoveResultListener listener : getMoveListeners()) {
+            listener.notifyActionResult(actionResult, goldMan);
         }
-
-        return newCoordinate;
     }
 }

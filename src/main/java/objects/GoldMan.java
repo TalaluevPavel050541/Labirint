@@ -5,7 +5,6 @@ import abstracts.AbstractMovingObject;
 import enums.ActionResult;
 import enums.GameObjectType;
 import enums.MovingDirection;
-import objects.Coordinate;
 
 /**
  * класс отвечает за работу объекта GOLDMAN - главный персонаж игры
@@ -67,9 +66,15 @@ public class GoldMan extends AbstractMovingObject {
                 return ActionResult.COLLECT_TREASURE;
             }
 
-            case MONSTER: {
+            case MONSTER:  {
                 return ActionResult.DIE;
             }
+
+            case EXIT:{
+                totalScore *= 2;
+                return ActionResult.WIN;
+            }
+
         }
 
         return super.doAction(gameObject);

@@ -5,7 +5,7 @@ import abstracts.AbstractGameObject;
 import enums.GameObjectType;
 import objects.Coordinate;
 import objects.creators.GameObjectCreator;
-import interfaces.collections.GameCollection;
+import interfaces.gamemap.collections.GameCollection;
 
 import java.io.BufferedReader;
 import java.io.File;

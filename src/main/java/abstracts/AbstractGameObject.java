@@ -13,15 +13,13 @@ import java.util.Objects;
  * характеристики объектов в игре
  */
 public abstract class AbstractGameObject implements StaticObject {
-    
+
     private GameObjectType type;// все объекты будут иметь тип
     private Coordinate coordinate;// все объекты будут иметь координаты положения
-    
+
     private ImageIcon icon = getImageIcon("/images/noicon.png");// изображение по-умолчанию
 
-    public AbstractGameObject() {
-
-    }
+    protected AbstractGameObject() {}
 
     public void setIcon(ImageIcon currentIcon) {
         this.icon = currentIcon;
@@ -32,11 +30,11 @@ public abstract class AbstractGameObject implements StaticObject {
         return icon;
     }
 
-    
+
     protected ImageIcon getImageIcon(String path){
         return new ImageIcon(getClass().getResource(path));
     }
-    
+
     @Override
     public GameObjectType getType() {
         return type;
@@ -56,23 +54,27 @@ public abstract class AbstractGameObject implements StaticObject {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof AbstractGameObject)) return false;
-        AbstractGameObject that = (AbstractGameObject) o;
-        return type == that.type && coordinate.equals(that.coordinate);
+    public int hashCode() {
+        int hash = 7;
+        hash = 37 * hash + (this.type != null ? this.type.hashCode() : 0);
+        hash = 37 * hash + Objects.hashCode(this.coordinate);
+        return hash;
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(type, coordinate);
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final AbstractGameObject other = (AbstractGameObject) obj;
+        return true;
     }
 
     @Override
     public String toString() {
-        return "AbstractGameObject{" +
-                "type=" + type +
-                ", coordinate=" + coordinate +
-                '}';
+        return super.toString();
     }
 }

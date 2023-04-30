@@ -1,9 +1,6 @@
 package abstracts;
 
-import enums.ActionResult;
-import enums.GameObjectType;
-import enums.MovingDirection;
-import interfaces.collections.GameCollection;
+import interfaces.gamemap.collections.GameCollection;
 import interfaces.gamemap.GameMap;
 import java.io.Serializable;
 import java.util.logging.Level;
@@ -103,10 +100,5 @@ public abstract class AbstractGameMap implements GameMap, Serializable { // Seri
 
     public void setGameCollection(GameCollection gameCollection) {
         this.gameCollection = gameCollection;
-    }
-
-    public ActionResult move(MovingDirection direction, GameObjectType gameObjectType) {
-        return getGameCollection().moveObject(direction, gameObjectType);
-
     }
 }
