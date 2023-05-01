@@ -4,9 +4,10 @@ import gamemap.abstracts.AbstractGameMap;
 
 import java.awt.*;
 
-public interface DrawableMap {
+public interface DrawableMap extends MainMap{
 
     Component getMapComponent();
 
     boolean drawMap();
+
 }

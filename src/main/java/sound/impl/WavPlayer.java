@@ -61,9 +61,6 @@ public class WavPlayer implements MoveResultListener, SoundPlayer {
             return;
         }
 
-        if (actionResult.equals(ActionResult.DIE)) {
-            stopBackgoundMusic();
-        }
 
         SoundObject soundObject = (SoundObject) abstractMovingObject;
 

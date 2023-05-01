@@ -15,6 +15,7 @@ import creators.MapLoaderCreator;
 import collections.interfaces.GameCollection;
 import gamemap.interfaces.DrawableMap;
 import listeners.interfaces.MoveResultListener;
+import movestrategies.impl.SlowMoving;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -34,7 +35,9 @@ public class JTableGameMap extends AbstractGameMap implements TimeMap {
     private transient AbstractGameObject[][] mapObjects;
     private transient TimeMover timeMover = new TimeMover();
 
-    public JTableGameMap() {
+    public JTableGameMap(GameCollection gameCollection) {
+        super(gameCollection);
+
 
         try {
             jTableMap.setEnabled(false);
@@ -153,7 +156,7 @@ public class JTableGameMap extends AbstractGameMap implements TimeMap {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            getGameCollection().moveObject(new AgressiveMoving(), GameObjectType.MONSTER); //выбор агрессивной стратегии для движения монстра
+            getGameCollection().moveObject(new SlowMoving(), GameObjectType.MONSTER);
         }
     }
 }

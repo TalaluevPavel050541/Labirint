@@ -18,9 +18,6 @@ public abstract class AbstractGameMap implements TimeMap, Serializable { // Seri
     protected GameCollection gameCollection;
     protected MapInfo mapInfo = new MapInfo();
 
-    public AbstractGameMap() {
-    }
-
     public AbstractGameMap(GameCollection gameCollection) {
         this.gameCollection = gameCollection;
     }

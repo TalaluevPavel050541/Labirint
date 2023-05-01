@@ -1,18 +1,17 @@
 package gui;
 
 
+import collections.impl.MapCollection;
+import enums.LocationType;
+import gamemap.adapters.HybridMapLoader;
+import gamemap.facades.GameFacade;
 import gamemap.impl.JTableGameMap;
-import gamemap.loader.abstracts.AbstractMapLoader;
-import gamemap.loader.impl.DBMapLoader;
 import objects.MapInfo;
 import objects.User;
 import score.impl.DbScoreSaver;
 import score.interfaces.ScoreSaver;
 import sound.impl.WavPlayer;
 import sound.interfaces.SoundPlayer;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 
 public class FrameMainMenu extends javax.swing.JFrame {
@@ -21,12 +20,13 @@ public class FrameMainMenu extends javax.swing.JFrame {
     private FrameStat frameStat;
     private FrameSavedGames frameSavedGames;
     private ScoreSaver scoreSaver = new DbScoreSaver();
-    private CustomDialog usernameDialog = new CustomDialog(this, "Имя пользователя", "Введите имя:", true);;
-    private JTableGameMap gameMap = new JTableGameMap();
-    private AbstractMapLoader mapLoader = new DBMapLoader(gameMap);
+    private CustomDialog usernameDialog = new CustomDialog(this, "Имя пользователя", "Введите имя:", true);
+    private JTableGameMap gameMap = new JTableGameMap(new MapCollection());
+    private HybridMapLoader mapLoader = new HybridMapLoader(gameMap);
     private SoundPlayer soundPlayer = new WavPlayer();
     private static final int MAP_LEVEL_ONE = 1;
     private User user;
+    private GameFacade gameFacade = new GameFacade(mapLoader, soundPlayer, scoreSaver);
 
     /**
      * Creates new form FrameMainMenu
@@ -141,9 +141,9 @@ public class FrameMainMenu extends javax.swing.JFrame {
 
     // Code for dispatching events from components to event handlers.
 
-    private class FormListener implements ActionListener {
+    private class FormListener implements java.awt.event.ActionListener {
         FormListener() {}
-        public void actionPerformed(ActionEvent evt) {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
             if (evt.getSource() == jbtnNewGame) {
                 FrameMainMenu.this.jbtnNewGameActionPerformed(evt);
             }
@@ -169,10 +169,12 @@ public class FrameMainMenu extends javax.swing.JFrame {
         MapInfo mapInfo = new MapInfo();
         mapInfo.setLevelId(MAP_LEVEL_ONE);
 
-
-        if (!mapLoader.loadMap(mapInfo)) {
+        if (!mapLoader.loadMap(mapInfo, LocationType.FS)) {
             return;
         }
+
+
+        gameFacade.setMapLoader(mapLoader);
 
         createFrameGame();
 
@@ -181,11 +183,11 @@ public class FrameMainMenu extends javax.swing.JFrame {
 
     private void createFrameGame() {
         if (frameGame == null) {
-            frameGame = new FrameGame(scoreSaver, mapLoader, soundPlayer);
+            frameGame = new FrameGame(gameFacade);
         }
     }
 
-    private void jbtnStatisticsActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jbtnStatisticsActionPerformed
+    private void jbtnStatisticsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnStatisticsActionPerformed
         if (frameStat == null) {
             frameStat = new FrameStat();
         }
@@ -210,7 +212,6 @@ public class FrameMainMenu extends javax.swing.JFrame {
         if (frameSavedGames == null) {
             frameSavedGames = new FrameSavedGames(mapLoader, frameGame);
         }
-
 
 
         frameSavedGames.showFrame(this);
@@ -283,14 +284,13 @@ public class FrameMainMenu extends javax.swing.JFrame {
         return usernameDialog.getValidatedText();
     }
 
-
     private boolean saveUser() {// сохранить пользователя, получить его id
 
         String username = getUserNameDialog();
 
         if (username != null && !username.trim().equals("")) {
 
-            if (user!=null && user.getUsername().equals(username)){// если ввел того же пользователя (т.е. ничего не менял)
+            if (user != null && user.getUsername().equals(username)) {// если ввел того же пользователя (т.е. ничего не менял)
                 return true;
             }
 
