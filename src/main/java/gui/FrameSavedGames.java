@@ -1,15 +1,26 @@
 package gui;
 
+import gamemap.loader.abstracts.AbstractMapLoader;
+import models.SaveGameTableModel;
+import objects.MapInfo;
+import objects.SavedMapInfo;
+import utils.MessageManager;
+
+import javax.swing.*;
+import java.util.ArrayList;
+
 public class FrameSavedGames extends BaseChildFrame {
 
-    /**
-     * Creates new form FrameSavedGames
-     */
-    public FrameSavedGames() {
+    private AbstractMapLoader mapLoader;
+    private SaveGameTableModel model;
+    private FrameGame frameGame;
+    private ArrayList<SavedMapInfo> list;
+
+    public FrameSavedGames(AbstractMapLoader mapLoader, FrameGame frameGame) {
         initComponents();
+        this.mapLoader = mapLoader;
+        this.frameGame = frameGame;
     }
-
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -21,14 +32,14 @@ public class FrameSavedGames extends BaseChildFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableGames = new javax.swing.JTable();
-        jbtnLoadGame = new javax.swing.JButton();
+        jTableSaves = new javax.swing.JTable();
+        btnLoadGame = new javax.swing.JButton();
         jbtnReturn = new javax.swing.JButton();
-        jbtnDelete = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
-        jTableGames.setModel(new javax.swing.table.DefaultTableModel(
+        jTableSaves.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
                         {null, null, null, null},
                         {null, null, null, null},
@@ -39,14 +50,14 @@ public class FrameSavedGames extends BaseChildFrame {
                         "Title 1", "Title 2", "Title 3", "Title 4"
                 }
         ));
-        jTableGames.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jScrollPane1.setViewportView(jTableGames);
+        jTableSaves.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane1.setViewportView(jTableSaves);
 
-        jbtnLoadGame.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/load_small.png"))); // NOI18N
-        jbtnLoadGame.setText("Загрузить");
-        jbtnLoadGame.addActionListener(new java.awt.event.ActionListener() {
+        btnLoadGame.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/load_small.png"))); // NOI18N
+        btnLoadGame.setText("Загрузить");
+        btnLoadGame.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtnLoadGameActionPerformed(evt);
+                btnLoadGameActionPerformed(evt);
             }
         });
 
@@ -58,11 +69,11 @@ public class FrameSavedGames extends BaseChildFrame {
             }
         });
 
-        jbtnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/delete.png"))); // NOI18N
-        jbtnDelete.setText("Удалить");
-        jbtnDelete.addActionListener(new java.awt.event.ActionListener() {
+        btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/delete.png"))); // NOI18N
+        btnDelete.setText("Удалить");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtnDeleteActionPerformed(evt);
+                btnDeleteActionPerformed(evt);
             }
         });
 
@@ -73,15 +84,13 @@ public class FrameSavedGames extends BaseChildFrame {
                         .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jbtnReturn)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 632, Short.MAX_VALUE)
+                                        .addComponent(jbtnReturn)
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 620, Short.MAX_VALUE)
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                                 .addGap(0, 0, Short.MAX_VALUE)
-                                                .addComponent(jbtnLoadGame)
+                                                .addComponent(btnLoadGame)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jbtnDelete)
+                                                .addComponent(btnDelete)
                                                 .addGap(6, 6, 6)))
                                 .addContainerGap())
         );
@@ -94,8 +103,8 @@ public class FrameSavedGames extends BaseChildFrame {
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jbtnLoadGame)
-                                        .addComponent(jbtnDelete))
+                                        .addComponent(btnLoadGame)
+                                        .addComponent(btnDelete))
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -103,22 +112,83 @@ public class FrameSavedGames extends BaseChildFrame {
         setBounds((screenSize.width-662)/2, (screenSize.height-420)/2, 662, 420);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jbtnLoadGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnLoadGameActionPerformed
-
-    }//GEN-LAST:event_jbtnLoadGameActionPerformed
-
     private void jbtnReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnReturnActionPerformed
         closeFrame();
     }//GEN-LAST:event_jbtnReturnActionPerformed
 
-    private void jbtnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnDeleteActionPerformed
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
 
-    }//GEN-LAST:event_jbtnDeleteActionPerformed
+        int index = jTableSaves.getSelectedRow();
+
+        if (index < 0) {
+            return;
+        }
+
+        int result = MessageManager.showYesNoMessage(this, "Подтверждаете удаление?");
+        switch (result) {
+            case JOptionPane.YES_OPTION: {
+
+
+
+                MapInfo mapInfo = model.getMapInfo(index);
+
+                mapLoader.deleteSavedMap(mapInfo);
+
+                model.deleteMapInfo(index);
+                model.refresh();
+
+
+                break;
+            }
+            case JOptionPane.NO_OPTION:
+            case JOptionPane.CANCEL_OPTION:
+
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnLoadGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadGameActionPerformed
+
+        int index = jTableSaves.getSelectedRow();
+
+        if (index < 0) {
+            return;
+        }
+
+        MapInfo mapInfo = model.getMapInfo(index);
+
+        mapLoader.loadMap(mapInfo);
+
+        closeFrame();
+
+        frameGame.showFrame(getParentFrame());
+
+    }//GEN-LAST:event_btnLoadGameActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnLoadGame;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableGames;
-    private javax.swing.JButton jbtnDelete;
-    private javax.swing.JButton jbtnLoadGame;
+    private javax.swing.JTable jTableSaves;
     private javax.swing.JButton jbtnReturn;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    protected void showFrame(JFrame parent) {
+
+        list = mapLoader.getSavedMapList(mapLoader.getGameMap().getMapInfo().getUser());
+
+        model = new SaveGameTableModel(list);
+
+        jTableSaves.setModel(model);
+
+        jTableSaves.setRowHeight(40);
+
+
+
+        super.showFrame(parent);
+
+        if (list.isEmpty()) {
+            MessageManager.showErrorMessage(this, "Сохраненных игр не найдено!");
+        }
+
+    }
 }

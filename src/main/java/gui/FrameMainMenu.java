@@ -1,19 +1,32 @@
 package gui;
 
 
-import enums.LocationType;
-import interfaces.gamemap.collections.MapCollection;
-import objects.gui.maps.JTableGameMap;
-import objects.sound.WavPlayer;
+import gamemap.impl.JTableGameMap;
+import gamemap.loader.abstracts.AbstractMapLoader;
+import gamemap.loader.impl.DBMapLoader;
+import objects.MapInfo;
+import objects.User;
+import score.impl.DbScoreSaver;
+import score.interfaces.ScoreSaver;
+import sound.impl.WavPlayer;
+import sound.interfaces.SoundPlayer;
 
-import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 
-public class FrameMainMenu extends JFrame {
+public class FrameMainMenu extends javax.swing.JFrame {
 
     private FrameGame frameGame;
-    private FrameStat frameStat = new FrameStat();
-    private FrameSavedGames frameLoadGame = new FrameSavedGames();
+    private FrameStat frameStat;
+    private FrameSavedGames frameSavedGames;
+    private ScoreSaver scoreSaver = new DbScoreSaver();
+    private CustomDialog usernameDialog = new CustomDialog(this, "Имя пользователя", "Введите имя:", true);;
+    private JTableGameMap gameMap = new JTableGameMap();
+    private AbstractMapLoader mapLoader = new DBMapLoader(gameMap);
+    private SoundPlayer soundPlayer = new WavPlayer();
+    private static final int MAP_LEVEL_ONE = 1;
+    private User user;
 
     /**
      * Creates new form FrameMainMenu
@@ -128,11 +141,14 @@ public class FrameMainMenu extends JFrame {
 
     // Code for dispatching events from components to event handlers.
 
-    private class FormListener implements java.awt.event.ActionListener {
+    private class FormListener implements ActionListener {
         FormListener() {}
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
+        public void actionPerformed(ActionEvent evt) {
             if (evt.getSource() == jbtnNewGame) {
                 FrameMainMenu.this.jbtnNewGameActionPerformed(evt);
+            }
+            else if (evt.getSource() == jbtnLoadGame) {
+                FrameMainMenu.this.jbtnLoadGameActionPerformed(evt);
             }
             else if (evt.getSource() == jbtnStatistics) {
                 FrameMainMenu.this.jbtnStatisticsActionPerformed(evt);
@@ -140,21 +156,41 @@ public class FrameMainMenu extends JFrame {
             else if (evt.getSource() == jbtnExit) {
                 FrameMainMenu.this.jbtnExitActionPerformed(evt);
             }
-            else if (evt.getSource() == jbtnLoadGame) {
-                FrameMainMenu.this.jbtnLoadGameActionPerformed(evt);
-            }
         }
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbtnNewGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnNewGameActionPerformed
-        if (frameGame==null){
-            frameGame = new FrameGame();
+
+
+        if (!saveUser()) {
+            return;
         }
-        frameGame.setMap(new JTableGameMap(LocationType.FS, "game.map", new MapCollection()), new WavPlayer());
+
+        MapInfo mapInfo = new MapInfo();
+        mapInfo.setLevelId(MAP_LEVEL_ONE);
+
+
+        if (!mapLoader.loadMap(mapInfo)) {
+            return;
+        }
+
+        createFrameGame();
+
         frameGame.showFrame(this);
     }//GEN-LAST:event_jbtnNewGameActionPerformed
 
-    private void jbtnStatisticsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnStatisticsActionPerformed
+    private void createFrameGame() {
+        if (frameGame == null) {
+            frameGame = new FrameGame(scoreSaver, mapLoader, soundPlayer);
+        }
+    }
+
+    private void jbtnStatisticsActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jbtnStatisticsActionPerformed
+        if (frameStat == null) {
+            frameStat = new FrameStat();
+        }
+
+        frameStat.setList(scoreSaver.getScoreList());
         frameStat.showFrame(this);
     }//GEN-LAST:event_jbtnStatisticsActionPerformed
 
@@ -163,7 +199,21 @@ public class FrameMainMenu extends JFrame {
     }//GEN-LAST:event_jbtnExitActionPerformed
 
     private void jbtnLoadGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnLoadGameActionPerformed
-        frameLoadGame.showFrame(this);
+
+
+        if (!saveUser()) {
+            return;
+        }
+
+        createFrameGame();
+
+        if (frameSavedGames == null) {
+            frameSavedGames = new FrameSavedGames(mapLoader, frameGame);
+        }
+
+
+
+        frameSavedGames.showFrame(this);
     }//GEN-LAST:event_jbtnLoadGameActionPerformed
 
     /**
@@ -222,4 +272,37 @@ public class FrameMainMenu extends JFrame {
     javax.swing.JPanel jpnlMainMenu;
     // End of variables declaration//GEN-END:variables
 
+    private String getUserNameDialog() {
+
+        if (user != null && user.getUsername() != null) {
+            usernameDialog.setUsername(user.getUsername());
+        }
+
+        usernameDialog.setVisible(true);
+
+        return usernameDialog.getValidatedText();
+    }
+
+
+    private boolean saveUser() {// сохранить пользователя, получить его id
+
+        String username = getUserNameDialog();
+
+        if (username != null && !username.trim().equals("")) {
+
+            if (user!=null && user.getUsername().equals(username)){// если ввел того же пользователя (т.е. ничего не менял)
+                return true;
+            }
+
+            user = new User();
+            user.setUsername(username);
+            user.setId(mapLoader.getPlayerId(username));
+
+            gameMap.getMapInfo().setUser(user);
+
+            return true;
+        }
+
+        return false;
+    }
 }

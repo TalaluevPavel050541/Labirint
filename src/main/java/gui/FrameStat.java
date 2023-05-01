@@ -1,18 +1,25 @@
 package gui;
 
+import models.ScoreTableModel;
+import objects.UserScore;
+
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class FrameStat extends BaseChildFrame implements ActionListener {
+
+    private ArrayList<UserScore> list;
 
     /**
      * Creates new form FrameStat
      */
     public FrameStat() {
         initComponents();
+    }
+
+    public void setList(ArrayList<UserScore> list) {
+        this.list = list;
     }
 
     /**
@@ -24,73 +31,80 @@ public class FrameStat extends BaseChildFrame implements ActionListener {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new JButton();
-        jScrollPane2 = new JScrollPane();
-        jTableStat = new JTable();
+        jbtnBack = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTableStat = new javax.swing.JTable();
 
-        setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Статистика");
 
-        jButton1.setText("<< в меню");
-        jButton1.setName("FrameStat"); // NOI18N
-        jButton1.addActionListener(this);
+        jbtnBack.setText("<< в меню");
+        jbtnBack.setName("FrameStat"); // NOI18N
+        jbtnBack.addActionListener(this);
 
-        jTableStat.setModel(new DefaultTableModel(
-                new Object[][]{
+        jTableStat.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
                         {null, null, null, null},
                         {null, null, null, null},
                         {null, null, null, null},
                         {null, null, null, null}
                 },
-                new String[]{
+                new String [] {
                         "Title 1", "Title 2", "Title 3", "Title 4"
                 }
         ));
         jScrollPane2.setViewportView(jTableStat);
 
-        GroupLayout layout = new GroupLayout(getContentPane());
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jScrollPane2)
-                                                .addContainerGap())
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jButton1)
-                                                .addGap(14, 650, Short.MAX_VALUE))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jbtnBack)
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 594, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(23, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
-                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(jButton1, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane2, GroupLayout.PREFERRED_SIZE, 355, GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jbtnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(26, Short.MAX_VALUE))
         );
 
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width - 777) / 2, (screenSize.height - 460) / 2, 777, 460);
+        java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+        setBounds((screenSize.width-647)/2, (screenSize.height-399)/2, 647, 399);
     }
 
     // Code for dispatching events from components to event handlers.
 
-    public void actionPerformed(ActionEvent evt) {
-        if (evt.getSource() == jButton1) {
-            FrameStat.this.jButton1ActionPerformed(evt);
+    public void actionPerformed(java.awt.event.ActionEvent evt) {
+        if (evt.getSource() == jbtnBack) {
+            FrameStat.this.jbtnBackActionPerformed(evt);
         }
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jbtnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnBackActionPerformed
         closeFrame();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
+    }//GEN-LAST:event_jbtnBackActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private JButton jButton1;
-    private JScrollPane jScrollPane2;
-    private JTable jTableStat;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTableStat;
+    private javax.swing.JButton jbtnBack;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    protected void showFrame(JFrame parent) {
+
+        jTableStat.setModel(new ScoreTableModel(list));
+
+        jTableStat.setRowHeight(40);
+
+        super.showFrame(parent);
+
+    }
 }
