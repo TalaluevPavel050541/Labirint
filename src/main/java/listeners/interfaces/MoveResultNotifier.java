@@ -1,11 +1,8 @@
 package listeners.interfaces;
 
+import java.util.List;
 import enums.ActionResult;
 import gameobjects.abstracts.AbstractMovingObject;
-import gameobjects.impl.GoldMan;
-import listeners.interfaces.MoveResultListener;
-
-import java.util.List;
 
 public interface MoveResultNotifier {
 

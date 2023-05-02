@@ -49,6 +49,11 @@ public class GameObjectCreator {
                 break;
             }
 
+            case TREE:{
+                obj = new Tree(coordinate);
+                break;
+            }
+
             default:
                 throw new IllegalArgumentException("Can't create object type: " + type);
 

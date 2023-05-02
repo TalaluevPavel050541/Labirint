@@ -21,12 +21,17 @@ public class GoldMan extends AbstractSoundObject {
     private transient Clip moveClip;
     private transient Clip treasureClip;
     private transient Clip winClip;
+    private transient Clip treeClip;
 
     public GoldMan(Coordinate coordinate) {
         super.setType(GameObjectType.GOLDMAN);
         super.setCoordinate(coordinate);
         super.setIcon(getImageIcon("/images/goldman_up.png"));
 
+        movingImages.put(MovingDirection.UP, getImageIcon("/images/goldman_up.png"));
+        movingImages.put(MovingDirection.DOWN, getImageIcon("/images/goldman_down.png"));
+        movingImages.put(MovingDirection.LEFT, getImageIcon("/images/goldman_left.png"));
+        movingImages.put(MovingDirection.RIGHT, getImageIcon("/images/goldman_right.png"));
 
     }
 
@@ -50,23 +55,7 @@ public class GoldMan extends AbstractSoundObject {
         this.turnsNumber = turnsNumber;
     }
 
-    @Override
-    public void changeIcon(MovingDirection direction) {
-        switch (direction) {
-            case DOWN:
-                super.setIcon(getImageIcon("/images/goldman_down.png"));
-                break;
-            case LEFT:
-                super.setIcon(getImageIcon("/images/goldman_left.png"));
-                break;
-            case RIGHT:
-                super.setIcon(getImageIcon("/images/goldman_right.png"));
-                break;
-            case UP:
-                super.setIcon(getImageIcon("/images/goldman_up.png"));
-                break;
-        }
-    }
+
 
     @Override
     public ActionResult doAction(AbstractGameObject gameObject) {
@@ -89,6 +78,10 @@ public class GoldMan extends AbstractSoundObject {
                 return ActionResult.WIN;
             }
 
+            case TREE:{
+                return ActionResult.HIDE_IN_TREE;
+            }
+
         }
 
         return super.doAction(gameObject);
@@ -109,9 +102,16 @@ public class GoldMan extends AbstractSoundObject {
             winClip = openClip(WavPlayer.SOUND_WIN);
         }
 
+        if (treeClip ==null) {
+            treeClip = openClip(WavPlayer.SOUND_TREE);
+        }
+
         switch (actionResult) {
             case MOVE: {
                 return moveClip;
+            }
+            case HIDE_IN_TREE:{
+                return treeClip;
             }
             case COLLECT_TREASURE: {
                 return treasureClip;

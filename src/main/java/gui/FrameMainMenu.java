@@ -13,9 +13,14 @@ import score.interfaces.ScoreSaver;
 import sound.impl.WavPlayer;
 import sound.interfaces.SoundPlayer;
 
+import javax.swing.*;
+import java.awt.*;
+import java.util.List;
+
 
 public class FrameMainMenu extends javax.swing.JFrame {
 
+    private JDialog splashDialog;
     private FrameGame frameGame;
     private FrameStat frameStat;
     private FrameSavedGames frameSavedGames;
@@ -161,24 +166,45 @@ public class FrameMainMenu extends javax.swing.JFrame {
 
     private void jbtnNewGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnNewGameActionPerformed
 
-
         if (!saveUser()) {
             return;
         }
 
-        MapInfo mapInfo = new MapInfo();
-        mapInfo.setLevelId(MAP_LEVEL_ONE);
 
-        if (!mapLoader.loadMap(mapInfo, LocationType.FS)) {
-            return;
-        }
+        showSplash();
+        SwingWorker<Void, Integer> worker = new SwingWorker<Void, Integer>() {
+            @Override
+            protected Void doInBackground() throws Exception {
+
+                MapInfo mapInfo = new MapInfo();
+                mapInfo.setLevelId(MAP_LEVEL_ONE);
+
+                if (!mapLoader.loadMap(mapInfo, LocationType.FS)) {
+                    throw new Exception("Error loading map!");
+                }
+
+                gameFacade.setMapLoader(mapLoader);
+
+                createFrameGame();
+
+                Thread.sleep(1000);
+                return null;
+            }
+
+            @Override
+            protected void process(List<Integer> chunks) {}
+
+            @Override
+            protected void done() {
+                hideSplash();
+                FrameMainMenu.this.frameGame.showFrame(FrameMainMenu.this);
+            }
+        };
+        worker.execute();
 
 
-        gameFacade.setMapLoader(mapLoader);
 
-        createFrameGame();
 
-        frameGame.showFrame(this);
     }//GEN-LAST:event_jbtnNewGameActionPerformed
 
     private void createFrameGame() {
@@ -202,7 +228,6 @@ public class FrameMainMenu extends javax.swing.JFrame {
 
     private void jbtnLoadGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnLoadGameActionPerformed
 
-
         if (!saveUser()) {
             return;
         }
@@ -213,7 +238,6 @@ public class FrameMainMenu extends javax.swing.JFrame {
             frameSavedGames = new FrameSavedGames(mapLoader, frameGame);
         }
 
-
         frameSavedGames.showFrame(this);
     }//GEN-LAST:event_jbtnLoadGameActionPerformed
 
@@ -221,7 +245,7 @@ public class FrameMainMenu extends javax.swing.JFrame {
      * выход из игры
      */
     private void quit() {
-        System.exit(0);// не рекомендуется так делать, т.к. могут быть другие процессы
+        System.exit(0);
 
     }
 
@@ -304,5 +328,37 @@ public class FrameMainMenu extends javax.swing.JFrame {
         }
 
         return false;
+    }
+
+    private void hideSplash() {
+        splashDialog.setVisible(false);
+        splashDialog.getParent().setEnabled(true);
+    }
+
+    public void showSplash() {
+
+        if (splashDialog == null) {
+            splashDialog = new JDialog(FrameMainMenu.this);
+
+            splashDialog.setSize(200, 100);
+            splashDialog.setUndecorated(true);
+            splashDialog.setModal(false);
+
+            JPanel panel = new JPanel(new GridBagLayout());
+            panel.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+
+            JLabel text = new JLabel("Загрузка...");
+            text.setFont(new Font("Tahoma", Font.BOLD, 15));
+
+            panel.setBackground(Color.LIGHT_GRAY);
+
+
+            panel.add(text);
+            splashDialog.add(panel);
+            splashDialog.setLocationRelativeTo(FrameMainMenu.this);
+        }
+
+        splashDialog.getParent().setEnabled(false);
+        splashDialog.setVisible(true);
     }
 }

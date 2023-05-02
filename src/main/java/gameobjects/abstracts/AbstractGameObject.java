@@ -57,9 +57,9 @@ public abstract class AbstractGameObject implements StaticObject, Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 37 * hash + (this.type != null ? this.type.hashCode() : 0);
-        hash = 37 * hash + Objects.hashCode(this.coordinate);
+        int hash = 5;
+        hash = 43 * hash + Objects.hashCode(this.type);
+        hash = 43 * hash + Objects.hashCode(this.coordinate);
         return hash;
     }
 
@@ -72,11 +72,12 @@ public abstract class AbstractGameObject implements StaticObject, Serializable {
             return false;
         }
         final AbstractGameObject other = (AbstractGameObject) obj;
+        if (this.type != other.type) {
+            return false;
+        }
+        if (!Objects.equals(this.coordinate, other.coordinate)) {
+            return false;
+        }
         return true;
-    }
-
-    @Override
-    public String toString() {
-        return super.toString();
     }
 }

@@ -21,16 +21,24 @@ import java.util.List;
 
 public class MapCollection extends MapMoveListenersRegistrator implements Serializable{// объекты для карты, которые умеют уведомлять всех слушателей о своих ходах
 
-    private HashMap<Coordinate, AbstractGameObject> gameObjects = new HashMap<>();// хранит все объекты с доступом по координатам
+    private HashMap<Coordinate, ArrayList<AbstractGameObject>> gameObjects = new HashMap<>();// хранит все объекты с доступом по координатам
     private EnumMap<GameObjectType, ArrayList<AbstractGameObject>> typeObjects = new EnumMap<>(GameObjectType.class); // хранит список объектов для каждого типа
 
     public MapCollection() {
-
     }
 
     @Override
     public List<AbstractGameObject> getAllGameObjects() {
-        return new ArrayList(gameObjects.values());// ! узкое место - каждый раз создается новая коллекция
+        //return new ArrayList(gameObjects.values());// ! узкое место - каждый раз создается новая коллекция
+        ArrayList<AbstractGameObject> list = new ArrayList<>();// ! узкое место - каждый раз создается новая коллекция
+
+        for (List<AbstractGameObject> tmpList : gameObjects.values()) {
+            for (AbstractGameObject obj : tmpList) {
+                list.add(obj);
+            }
+        }
+
+        return list;
     }
 
     @Override
@@ -40,31 +48,53 @@ public class MapCollection extends MapMoveListenersRegistrator implements Serial
 
     @Override
     public AbstractGameObject getObjectByCoordinate(Coordinate coordinate) {
-        AbstractGameObject gameObject = gameObjects.get(coordinate);
-        if (gameObject == null) {// край карты
-            gameObject = new Wall(coordinate);
+
+        AbstractGameObject gameObject = null;
+
+        ArrayList<AbstractGameObject> list = gameObjects.get(coordinate);
+
+        if (list == null) {// край карты
+            return new Wall(coordinate);
         }
+
+        for (AbstractGameObject obj : list) {
+            if (gameObject == null) {
+                gameObject = obj;
+                continue;
+            }
+            if (obj.getType().getIndexPriority() > gameObject.getType().getIndexPriority()) {
+                gameObject = obj;
+            }
+        }
+
+
         return gameObject;
     }
 
     @Override
     public AbstractGameObject getObjectByCoordinate(int x, int y) {
-        return gameObjects.get(new Coordinate(x, y));
+        return getObjectByCoordinate(new Coordinate(x, y));
     }
 
     @Override
     public void addGameObject(AbstractGameObject gameObject) {
 
-        ArrayList<AbstractGameObject> tmpList = typeObjects.get(gameObject.getType());
+        ArrayList<AbstractGameObject> typeList = typeObjects.get(gameObject.getType());
+        ArrayList<AbstractGameObject> objList = gameObjects.get(gameObject.getCoordinate());
 
-        if (tmpList == null) {
-            tmpList = new ArrayList<>();
+        if (typeList == null) {
+            typeList = new ArrayList<>();
         }
 
-        tmpList.add(gameObject);
+        if (objList == null) {
+            objList = new ArrayList<>();
+        }
 
-        gameObjects.put(gameObject.getCoordinate(), gameObject);
-        typeObjects.put(gameObject.getType(), tmpList);
+        typeList.add(gameObject);
+        objList.add(gameObject);
+
+        gameObjects.put(gameObject.getCoordinate(), objList);
+        typeObjects.put(gameObject.getType(), typeList);
 
     }
 
@@ -83,7 +113,7 @@ public class MapCollection extends MapMoveListenersRegistrator implements Serial
 
         ActionResult actionResult = null;
 
-        if (this.getGameObjects(gameObjectType)==null){
+        if (this.getGameObjects(gameObjectType) == null) {
             return;
         }
 
@@ -108,6 +138,11 @@ public class MapCollection extends MapMoveListenersRegistrator implements Serial
                     }
                     case COLLECT_TREASURE: {
                         swapObjects(movingObject, new Nothing(newCoordinate));
+                        removeObject(objectInNewCoordinate);
+                        break;
+                    }
+                    case HIDE_IN_TREE: {
+                        swapObjects(movingObject, new Nothing(newCoordinate));
                         break;
                     }
 
@@ -126,19 +161,22 @@ public class MapCollection extends MapMoveListenersRegistrator implements Serial
         }
     }
 
-    private void swapObjects(AbstractGameObject obj1, AbstractGameObject obj2) {
-
-        swapCoordinates(obj1, obj2);
-
-        gameObjects.put(obj1.getCoordinate(), obj1);
-        gameObjects.put(obj2.getCoordinate(), obj2);
-
+    private void removeObject(AbstractGameObject obj){
+        gameObjects.get(obj.getCoordinate()).remove(obj);
+        typeObjects.get(obj.getType()).remove(obj);
     }
 
-    private void swapCoordinates(AbstractGameObject obj1, AbstractGameObject obj2) {
+    private void swapObjects(AbstractGameObject obj1, AbstractGameObject obj2) {
+
+        gameObjects.get(obj1.getCoordinate()).remove(obj1);
+        gameObjects.get(obj2.getCoordinate()).remove(obj2);
+
         Coordinate tmpCoordinate = obj1.getCoordinate();
         obj1.setCoordinate(obj2.getCoordinate());
         obj2.setCoordinate(tmpCoordinate);
+
+        gameObjects.get(obj1.getCoordinate()).add(obj1);
+        gameObjects.get(obj2.getCoordinate()).add(obj2);
     }
 
     @Override

@@ -1,6 +1,5 @@
 package listeners.interfaces;
 
-
 import gameobjects.abstracts.AbstractMovingObject;
 import enums.ActionResult;
 

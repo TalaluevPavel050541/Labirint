@@ -19,6 +19,7 @@ public class WavPlayer implements MoveResultListener, SoundPlayer {
     public static final String SOUND_TREASURE = "treasure.wav";
     public static final String SOUND_WIN = "win.wav";
     public static final String SOUND_MOVE = "waka_waka.wav";
+    public static final String SOUND_TREE = "tree.wav";
 
     public static final String SOUND_PATH = "/sounds/";
     private Clip backGroundClip;
@@ -32,11 +33,11 @@ public class WavPlayer implements MoveResultListener, SoundPlayer {
             backGroundClip.open(ais);
 
         } catch (UnsupportedAudioFileException ex) {
-            Logger.getLogger(AbstractSoundObject.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(WavPlayer.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(AbstractSoundObject.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(WavPlayer.class.getName()).log(Level.SEVERE, null, ex);
         } catch (LineUnavailableException ex) {
-            Logger.getLogger(AbstractSoundObject.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(WavPlayer.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -99,5 +100,9 @@ public class WavPlayer implements MoveResultListener, SoundPlayer {
 
         thread.setDaemon(true);
         thread.start();
+
+
     }
+
+
 }

@@ -5,6 +5,7 @@ import gameobjects.abstracts.AbstractMovingObject;
 import enums.ActionResult;
 import enums.GameObjectType;
 import enums.MovingDirection;
+import listeners.interfaces.CloseFrameListener;
 import listeners.interfaces.MoveResultListener;
 import utils.MessageManager;
 
@@ -18,8 +19,7 @@ public class FrameGame extends ConfirmCloseFrame implements ActionListener, Move
     private static final String MESSAGE_SAVED_SUCCESS = "Игра сохранена!";
     private static final String MESSAGE_DIE = "Вы проиграли!";
     private static final String MESSAGE_WIN = "Вы выиграли! Количество очков:";
-
-
+    private FrameStat frameStat;
     private GameFacade gameFacade;
 
     /**
@@ -54,10 +54,10 @@ public class FrameGame extends ConfirmCloseFrame implements ActionListener, Move
         jlabelTurnsLeft = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jmenuFile = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        jmenuSave = new javax.swing.JMenuItem();
+        jmenuExit = new javax.swing.JMenuItem();
+        jmenuService = new javax.swing.JMenu();
+        jmenuStat = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setName("FrameGame"); // NOI18N
@@ -181,28 +181,31 @@ public class FrameGame extends ConfirmCloseFrame implements ActionListener, Move
                                 .addContainerGap()
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(jPanelMap, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
-                                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE))
+                                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 310, Short.MAX_VALUE))
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jmenuFile.setText("Файл");
         jmenuFile.setName("jmenuFile"); // NOI18N
 
-        jMenuItem1.setText("Сохранить игру");
-        jmenuFile.add(jMenuItem1);
+        jmenuSave.setText("Сохранить игру");
+        jmenuSave.addActionListener(this);
+        jmenuFile.add(jmenuSave);
 
-        jMenuItem2.setText("Выйти из игры");
-        jMenuItem2.setActionCommand("Выйти");
-        jmenuFile.add(jMenuItem2);
+        jmenuExit.setText("Выйти из игры");
+        jmenuExit.setActionCommand("Выйти");
+        jmenuExit.addActionListener(this);
+        jmenuFile.add(jmenuExit);
 
         jMenuBar1.add(jmenuFile);
 
-        jMenu2.setText("Сервис");
+        jmenuService.setText("Сервис");
 
-        jMenuItem3.setText("Статистика");
-        jMenu2.add(jMenuItem3);
+        jmenuStat.setText("Статистика");
+        jmenuStat.addActionListener(this);
+        jmenuService.add(jmenuStat);
 
-        jMenuBar1.add(jMenu2);
+        jMenuBar1.add(jmenuService);
 
         setJMenuBar(jMenuBar1);
 
@@ -219,8 +222,8 @@ public class FrameGame extends ConfirmCloseFrame implements ActionListener, Move
                                 .addContainerGap())
         );
 
-        java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width-534)/2, (screenSize.height-397)/2, 534, 397);
+        setSize(new java.awt.Dimension(534, 397));
+        setLocationRelativeTo(null);
     }
 
     // Code for dispatching events from components to event handlers.
@@ -244,6 +247,15 @@ public class FrameGame extends ConfirmCloseFrame implements ActionListener, Move
         else if (evt.getSource() == jbtnExit) {
             FrameGame.this.jbtnExitActionPerformed(evt);
         }
+        else if (evt.getSource() == jmenuExit) {
+            FrameGame.this.jmenuExitActionPerformed(evt);
+        }
+        else if (evt.getSource() == jmenuStat) {
+            FrameGame.this.jmenuStatActionPerformed(evt);
+        }
+        else if (evt.getSource() == jmenuSave) {
+            FrameGame.this.jmenuSaveActionPerformed(evt);
+        }
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbtnUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnUpActionPerformed
@@ -263,19 +275,44 @@ public class FrameGame extends ConfirmCloseFrame implements ActionListener, Move
     }//GEN-LAST:event_jbtnRightActionPerformed
 
     private void jbtnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnSaveActionPerformed
-        gameFacade.saveMap();
-        closeFrame(MESSAGE_SAVED_SUCCESS);
+        saveMap();
     }//GEN-LAST:event_jbtnSaveActionPerformed
 
     private void jbtnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnExitActionPerformed
-        closeFrame();
+        if (allowExit()) {
+            closeFrame();
+        }
     }//GEN-LAST:event_jbtnExitActionPerformed
+
+    private void jmenuStatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmenuStatActionPerformed
+        gameFacade.stopGame();
+        if (frameStat == null) {
+            frameStat = new FrameStat(new CloseFrameListener() {
+                @Override
+                public void onCloseAction() {
+                    gameFacade.startGame();
+                }
+            });
+
+        }
+
+        frameStat.setList(gameFacade.getScoreSaver().getScoreList());
+        frameStat.showFrame(this);
+
+    }//GEN-LAST:event_jmenuStatActionPerformed
+
+    private void jmenuExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmenuExitActionPerformed
+        if (allowExit()) {
+            closeFrame();
+        }
+    }//GEN-LAST:event_jmenuExitActionPerformed
+
+    private void jmenuSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmenuSaveActionPerformed
+        saveMap();
+    }//GEN-LAST:event_jmenuSaveActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanelMap;
@@ -289,7 +326,11 @@ public class FrameGame extends ConfirmCloseFrame implements ActionListener, Move
     private javax.swing.JLabel jlabelScoreText;
     private javax.swing.JLabel jlabelTurnsLeft;
     private javax.swing.JLabel jlabelTurnsLeftText;
+    private javax.swing.JMenuItem jmenuExit;
     private javax.swing.JMenu jmenuFile;
+    private javax.swing.JMenuItem jmenuSave;
+    private javax.swing.JMenu jmenuService;
+    private javax.swing.JMenuItem jmenuStat;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -367,6 +408,30 @@ public class FrameGame extends ConfirmCloseFrame implements ActionListener, Move
     @Override
     protected boolean acceptCloseAction() {
 
+        return allowExit();
+
+
+
+    }
+
+    @Override
+    protected void closeFrame() {
+        gameFacade.stopGame();
+        super.closeFrame();
+    }
+
+    private void closeFrame(final String message) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                MessageManager.showInformMessage(null, message);
+            }
+        });
+
+        closeFrame();
+    }
+
+    private boolean allowExit() {
         gameFacade.stopGame();
 
 
@@ -391,20 +456,9 @@ public class FrameGame extends ConfirmCloseFrame implements ActionListener, Move
         return true;
     }
 
-    @Override
-    protected void closeFrame() {
-        gameFacade.stopGame();
-        super.closeFrame();
-    }
-
-    private void closeFrame(final String message) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                MessageManager.showInformMessage(null, message);
-            }
-        });
-
-        closeFrame();
+    private void saveMap() {
+        gameFacade.saveMap();
+        closeFrame(MESSAGE_SAVED_SUCCESS);
     }
 }
+

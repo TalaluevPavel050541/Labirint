@@ -18,25 +18,13 @@ public class Monster extends AbstractSoundObject {
     public Monster(Coordinate coordinate) {
         super.setType(GameObjectType.MONSTER);
         super.setCoordinate(coordinate);
-        super.setIcon(getImageIcon("/images/monster_up.jpg"));
-    }
+        super.setIcon(getImageIcon("/images/monster_up.jpg"));// иконку по-умолчанию (можно сделать реализацию случайного выбора иконки)
 
-    @Override
-    public void changeIcon(MovingDirection direction) {
-        switch (direction) {
-            case DOWN:
-                super.setIcon(getImageIcon("/images/monster_down.jpg"));
-                break;
-            case LEFT:
-                super.setIcon(getImageIcon("/images/monster_right.jpg"));
-                break;
-            case RIGHT:
-                super.setIcon(getImageIcon("/images/monster_right.jpg"));
-                break;
-            case UP:
-                super.setIcon(getImageIcon("/images/monster_up.jpg"));
-                break;
-        }
+        movingImages.put(MovingDirection.UP, getImageIcon("/images/monster_up.jpg"));
+        movingImages.put(MovingDirection.DOWN, getImageIcon("/images/monster_down.jpg"));
+        movingImages.put(MovingDirection.LEFT, getImageIcon("/images/monster_left.jpg"));
+        movingImages.put(MovingDirection.RIGHT, getImageIcon("/images/monster_right.jpg"));
+
     }
 
     @Override
@@ -44,9 +32,9 @@ public class Monster extends AbstractSoundObject {
 
         switch (gameObject.getType()) {
 
-
             case TREASURE:
-            case MONSTER: { // монстр не может наступать на сокровище и на других монстров
+            case MONSTER:
+            case TREE: { // монстр не может наступать на сокровище, дерево и на других монстров
                 return ActionResult.NO_ACTION;
             }
 

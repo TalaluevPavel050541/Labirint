@@ -3,18 +3,11 @@ package gamemap.impl;
 import gamemap.abstracts.AbstractGameMap;
 import gamemap.interfaces.TimeMap;
 import gameobjects.abstracts.AbstractGameObject;
-import gameobjects.abstracts.AbstractMovingObject;
-import enums.ActionResult;
 import enums.GameObjectType;
-import enums.LocationType;
-import movestrategies.impl.AgressiveMoving;
 import gameobjects.impl.Coordinate;
 import gameobjects.impl.Nothing;
 import gameobjects.impl.Wall;
-import creators.MapLoaderCreator;
 import collections.interfaces.GameCollection;
-import gamemap.interfaces.DrawableMap;
-import listeners.interfaces.MoveResultListener;
 import movestrategies.impl.SlowMoving;
 
 import javax.swing.*;
@@ -72,7 +65,8 @@ public class JTableGameMap extends AbstractGameMap implements TimeMap {
 
         // потом заполнить массив объектами
         for (AbstractGameObject gameObj : getGameCollection().getAllGameObjects()) {
-            if (!gameObj.getType().equals(GameObjectType.NOTHING)) {// пустоты не добавляем, т.к. они уже добавились когда мы вызвали метод fillEmptyMap()
+            if (!gameObj.getType().equals(GameObjectType.NOTHING)
+            ) {// пустоты не добавляем, т.к. они уже добавились когда мы вызвали метод fillEmptyMap()
                 int y = gameObj.getCoordinate().getY();
                 int x = gameObj.getCoordinate().getX();
                 if (!(mapObjects[y][x] instanceof Nothing) & // если в этих координатах уже есть какой то объект, отличный от пустоты и стены

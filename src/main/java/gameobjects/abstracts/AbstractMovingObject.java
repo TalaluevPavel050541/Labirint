@@ -4,7 +4,10 @@ import enums.ActionResult;
 import enums.MovingDirection;
 import gameobjects.interfaces.MovingObject;
 import gameobjects.impl.Coordinate;
+
+import javax.swing.*;
 import java.io.Serializable;
+import java.util.EnumMap;
 
 /**
  * класс, который отвечает за любой движущийся объект. наследуется от класса
@@ -12,8 +15,9 @@ import java.io.Serializable;
  */
 public abstract class AbstractMovingObject extends AbstractGameObject implements MovingObject, Serializable {
 
-    public abstract void changeIcon(MovingDirection direction);
     private int step = 1;// по-умолчанию у всех объектов шаг равен 1
+
+    protected EnumMap<MovingDirection, ImageIcon> movingImages = new EnumMap<>(MovingDirection.class);
 
     @Override
     public int getStep() {
@@ -88,5 +92,14 @@ public abstract class AbstractMovingObject extends AbstractGameObject implements
         }
 
         return newCoordinate;
+
+
     }
+
+
+    public void changeIcon(MovingDirection direction) {
+        super.setIcon(movingImages.get(direction));
+    }
+
+
 }
