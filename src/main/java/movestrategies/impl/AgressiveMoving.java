@@ -26,7 +26,7 @@ public class AgressiveMoving implements MoveStrategy {
         // сначала ищем вокруг, можно ли съесть игрока
         MovingDirection direction = searchAction(ActionResult.DIE, false);
 
-        // если нет рядом персонажа - просто двигаемся в случайном направлении
+        // если рядом персонажа (не съели его) - просто двигаемся в случайном направлении
         if (direction == null) {
             direction = searchAction(ActionResult.MOVE, true);
         }
@@ -34,16 +34,25 @@ public class AgressiveMoving implements MoveStrategy {
         return direction;
     }
 
+    private Random random = new Random();
+
     private MovingDirection getRandomDirection() {
-        return directions[new Random().nextInt(directions.length)];
+        return directions[random.nextInt(directions.length)];
     }
 
     private MovingDirection searchAction(ActionResult actionResult, boolean random) {
+
+        int c = 0;
+
         MovingDirection direction = null;
 
         if (random) {
             do {
+                c++;
                 direction = getRandomDirection();
+                if (c>4){
+                    return direction;
+                }
             } while (!checkActionResult(actionResult, direction));// случайно подбирать сторону пока не найдем нужный ActionResult
         }else{
             for (MovingDirection movingDirection : directions) {// искать по всем 4 сторонам
@@ -55,10 +64,15 @@ public class AgressiveMoving implements MoveStrategy {
         }
 
         return direction;
+
     }
+
 
     private boolean checkActionResult(ActionResult actionResult, MovingDirection direction){
         AbstractGameObject objectInNewCoordinate = gameCollection.getObjectByCoordinate(movingObject.getDirectionCoordinate(direction));
+        if (objectInNewCoordinate == null){
+            return false;
+        }
         return movingObject.doAction(objectInNewCoordinate).equals(actionResult);
     }
 }

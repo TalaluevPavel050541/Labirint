@@ -7,28 +7,36 @@ import enums.MovingDirection;
 import gameobjects.abstracts.AbstractSoundObject;
 
 import javax.sound.sampled.Clip;
+import javax.swing.*;
+import java.util.EnumMap;
 
 /**
  * класс отвечает за работу объекта MONSTER
  */
 public class Monster extends AbstractSoundObject {
 
-    private transient Clip clip;
+    protected static EnumMap<MovingDirection, ImageIcon> monsterImages = new EnumMap<>(MovingDirection.class);// карта иконок для всех направлений монстра
 
     public Monster(Coordinate coordinate) {
         super.setType(GameObjectType.MONSTER);
         super.setCoordinate(coordinate);
         super.setIcon(getImageIcon("/images/monster_up.jpg"));// иконку по-умолчанию (можно сделать реализацию случайного выбора иконки)
 
-        movingImages.put(MovingDirection.UP, getImageIcon("/images/monster_up.jpg"));
-        movingImages.put(MovingDirection.DOWN, getImageIcon("/images/monster_down.jpg"));
-        movingImages.put(MovingDirection.LEFT, getImageIcon("/images/monster_left.jpg"));
-        movingImages.put(MovingDirection.RIGHT, getImageIcon("/images/monster_right.jpg"));
+        if (monsterImages.isEmpty()) {// для всех монстров будут одинаковые картики, поэтому нет смысла создавать для каждого объекта отдельный map
+            monsterImages.put(MovingDirection.UP, getImageIcon("/images/monster_up.jpg"));
+            monsterImages.put(MovingDirection.DOWN, getImageIcon("/images/monster_down.jpg"));
+            monsterImages.put(MovingDirection.LEFT, getImageIcon("/images/monster_left.jpg"));
+            monsterImages.put(MovingDirection.RIGHT, getImageIcon("/images/monster_right.jpg"));
+        }
 
     }
 
     @Override
     public ActionResult doAction(AbstractGameObject gameObject) {
+
+        if (gameObject == null){
+            return ActionResult.NO_ACTION;
+        }
 
         switch (gameObject.getType()) {
 
@@ -56,5 +64,10 @@ public class Monster extends AbstractSoundObject {
         }
 
         return null;
+    }
+
+    @Override
+    public void changeIcon(MovingDirection direction) {
+        super.setIcon(monsterImages.get(direction));
     }
 }

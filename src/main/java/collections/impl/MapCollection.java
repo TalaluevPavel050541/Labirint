@@ -54,7 +54,7 @@ public class MapCollection extends MapMoveListenersRegistrator implements Serial
         ArrayList<AbstractGameObject> list = gameObjects.get(coordinate);
 
         if (list == null) {// край карты
-            return new Wall(coordinate);
+            return null;
         }
 
         for (AbstractGameObject obj : list) {

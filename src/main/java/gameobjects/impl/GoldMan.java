@@ -55,10 +55,13 @@ public class GoldMan extends AbstractSoundObject {
         this.turnsNumber = turnsNumber;
     }
 
-
-
     @Override
     public ActionResult doAction(AbstractGameObject gameObject) {
+
+        if (gameObject == null) {
+            return ActionResult.NO_ACTION;
+        }
+
 
         turnsNumber++;
 
@@ -78,7 +81,7 @@ public class GoldMan extends AbstractSoundObject {
                 return ActionResult.WIN;
             }
 
-            case TREE:{
+            case TREE: {
                 return ActionResult.HIDE_IN_TREE;
             }
 
@@ -90,19 +93,19 @@ public class GoldMan extends AbstractSoundObject {
     @Override
     public Clip getSoundClip(ActionResult actionResult) {
 
-        if (moveClip ==null) {
+        if (moveClip == null) {
             moveClip = openClip(WavPlayer.SOUND_MOVE);
         }
 
-        if (treasureClip ==null) {
+        if (treasureClip == null) {
             treasureClip = openClip(WavPlayer.SOUND_TREASURE);
         }
 
-        if (winClip ==null) {
+        if (winClip == null) {
             winClip = openClip(WavPlayer.SOUND_WIN);
         }
 
-        if (treeClip ==null) {
+        if (treeClip == null) {
             treeClip = openClip(WavPlayer.SOUND_TREE);
         }
 
@@ -110,7 +113,7 @@ public class GoldMan extends AbstractSoundObject {
             case MOVE: {
                 return moveClip;
             }
-            case HIDE_IN_TREE:{
+            case HIDE_IN_TREE: {
                 return treeClip;
             }
             case COLLECT_TREASURE: {
