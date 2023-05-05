@@ -1,6 +1,5 @@
 package gamemap.loader.impl;
 
-import collections.impl.MapCollection;
 import database.SQLiteConnection;
 import gamemap.abstracts.AbstractGameMap;
 import gamemap.loader.abstracts.AbstractMapLoader;
@@ -22,6 +21,7 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+//класс загрузки карты из базы данных
 public class DBMapLoader extends AbstractMapLoader {
 
     public DBMapLoader(AbstractGameMap gameMap) {
@@ -215,8 +215,7 @@ public class DBMapLoader extends AbstractMapLoader {
             }
 
 
-
-            if (!gameMap.isValidMap()) {
+            if (!gameMap.getMapInfo().isValidMap()) {
                 throw new Exception("The map is not valid!");
             }
 

@@ -2,6 +2,7 @@ package listeners.interfaces;
 
 import java.util.List;
 import enums.ActionResult;
+import gameobjects.abstracts.AbstractGameObject;
 import gameobjects.abstracts.AbstractMovingObject;
 
 public interface MoveResultNotifier {
@@ -14,6 +15,6 @@ public interface MoveResultNotifier {
 
     public void removeAllMoveListeners();
 
-    public void notifyMoveListeners(ActionResult actionResult, AbstractMovingObject abstractMovingObject);
+    public void notifyMoveListeners(ActionResult actionResult, AbstractGameObject movingObject, AbstractGameObject targetObject);
 
 }

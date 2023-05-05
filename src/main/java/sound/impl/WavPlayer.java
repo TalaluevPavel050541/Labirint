@@ -1,8 +1,7 @@
 package sound.impl;
 
-import gameobjects.abstracts.AbstractMovingObject;
+import gameobjects.abstracts.AbstractGameObject;
 import enums.ActionResult;
-import gameobjects.abstracts.AbstractSoundObject;
 import listeners.interfaces.MoveResultListener;
 import sound.interfaces.SoundObject;
 import sound.interfaces.SoundPlayer;
@@ -56,12 +55,11 @@ public class WavPlayer implements MoveResultListener, SoundPlayer {
     }
 
     @Override
-    public void notifyActionResult(ActionResult actionResult, final AbstractMovingObject abstractMovingObject) {
+    public void notifyActionResult(ActionResult actionResult, final AbstractGameObject abstractMovingObject, final AbstractGameObject targetObject) {
 
         if (!(abstractMovingObject instanceof SoundObject)) {
             return;
         }
-
 
         SoundObject soundObject = (SoundObject) abstractMovingObject;
 
@@ -100,9 +98,5 @@ public class WavPlayer implements MoveResultListener, SoundPlayer {
 
         thread.setDaemon(true);
         thread.start();
-
-
     }
-
-
 }

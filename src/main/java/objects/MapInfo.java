@@ -1,9 +1,8 @@
 package objects;
 
 public class MapInfo {
-    
-    private User user = new User();
 
+    private User user = new User();
     private int id;
     private String mapName;
     private String value;
@@ -93,8 +92,8 @@ public class MapInfo {
     public void setId(int id) {
         this.id = id;
     }
-    
-    
-    
 
+    public boolean isValidMap() {
+        return isGoldManExist() && isExitExist(); // если есть и вход и выход - карта валидна
+    }
 }

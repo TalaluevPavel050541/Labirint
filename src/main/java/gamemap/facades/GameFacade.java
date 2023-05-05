@@ -5,6 +5,7 @@ import enums.LocationType;
 import enums.MovingDirection;
 import gamemap.abstracts.AbstractGameMap;
 import gamemap.adapters.HybridMapLoader;
+import gameobjects.abstracts.AbstractGameObject;
 import gameobjects.impl.GoldMan;
 import listeners.interfaces.MoveResultListener;
 import objects.MapInfo;
@@ -16,6 +17,7 @@ import sound.interfaces.SoundPlayer;
 
 import java.awt.*;
 
+// используется паттерн Фасад
 public class GameFacade {
 
     private HybridMapLoader mapLoader;
@@ -30,19 +32,6 @@ public class GameFacade {
         this.soundPlayer = soundPlayer;
     }
 
-
-    private void init() {
-        gameMap = mapLoader.getGameMap();
-        mapInfo = gameMap.getMapInfo();
-
-        // слушатели для звуков должны идти в первую очередь, т.к. они запускаются в отдельном потоке и не мешают выполняться следующим слушателям
-        if (soundPlayer instanceof MoveResultListener) {
-            mapLoader.getGameMap().getGameCollection().addMoveListener((MoveResultListener) soundPlayer);
-        }
-
-
-    }
-
     public GameFacade() {
     }
 
@@ -50,15 +39,20 @@ public class GameFacade {
         this.soundPlayer = soundPlayer;
     }
 
-
     public void setMapLoader(HybridMapLoader mapLoader) {
         this.mapLoader = mapLoader;
+
+        // слушатели для звуков должны идти в первую очередь, т.к. они запускаются в отдельном потоке и не мешают выполняться следующим слушателям
+        if (soundPlayer instanceof MoveResultListener) {
+            mapLoader.getGameMap().getGameCollection().addMoveListener((MoveResultListener) soundPlayer); // реализация Паттерна Наблюдатель
+        }
+
+        updateMap();
     }
 
     public ScoreSaver getScoreSaver() {
         return scoreSaver;
     }
-
 
     public void setScoreSaver(ScoreSaver scoreSaver) {
         this.scoreSaver = scoreSaver;
@@ -74,8 +68,6 @@ public class GameFacade {
     }
 
     public Component getMap() {
-        init();
-        gameMap.drawMap();
         return mapLoader.getGameMap().getMapComponent();
     }
 
@@ -87,7 +79,7 @@ public class GameFacade {
     }
 
     public void addMoveListener(MoveResultListener listener) {
-        mapLoader.getGameMap().getGameCollection().addMoveListener(listener);
+        mapLoader.getGameMap().getGameCollection().addMoveListener(listener); // реализация Паттерна Наблюдатель
     }
 
     public void saveMap() {
@@ -117,7 +109,16 @@ public class GameFacade {
     }
 
     public void updateMap() {
-        gameMap.drawMap();
+        gameMap = mapLoader.getGameMap();
+        mapInfo = gameMap.getMapInfo();
+
+
+        gameMap.updateMap();
+    }
+
+    public void updateObjects(AbstractGameObject obj1, AbstractGameObject obj2) {
+        gameMap.updateMapObjects(obj1, obj2);
     }
 }
+
 

@@ -94,7 +94,7 @@ public abstract class AbstractMapLoader implements MapLoader {
         }
 
         return 0;
-
     }
 }
+
 

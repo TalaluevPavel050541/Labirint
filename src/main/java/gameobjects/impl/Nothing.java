@@ -2,7 +2,7 @@ package gameobjects.impl;
 
 import gameobjects.abstracts.AbstractGameObject;
 import enums.GameObjectType;
-import gameobjects.impl.Coordinate;
+
 
 
 /**
@@ -14,6 +14,5 @@ public class Nothing extends AbstractGameObject {
         super.setType(GameObjectType.NOTHING);
         super.setCoordinate(coordinate);
         super.setIcon(null);
-
     }
 }

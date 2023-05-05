@@ -1,6 +1,7 @@
 package gui;
 
 import gamemap.facades.GameFacade;
+import gameobjects.abstracts.AbstractGameObject;
 import gameobjects.abstracts.AbstractMovingObject;
 import enums.ActionResult;
 import enums.GameObjectType;
@@ -11,9 +12,10 @@ import utils.MessageManager;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
-
-public class FrameGame extends ConfirmCloseFrame implements ActionListener, MoveResultListener {
+public class FrameGame extends BaseChildFrame implements ActionListener, MoveResultListener {
 
     private static final String MESSAGE_SAVE = "Сохранить игру перед выходом?";
     private static final String MESSAGE_SAVED_SUCCESS = "Игра сохранена!";
@@ -351,14 +353,14 @@ public class FrameGame extends ConfirmCloseFrame implements ActionListener, Move
     }
 
     @Override
-    public void notifyActionResult(ActionResult actionResult, AbstractMovingObject movingObject) {
+    public void notifyActionResult(ActionResult actionResult, AbstractGameObject movingObject, AbstractGameObject targetObject) {
 
         if (movingObject.getType().equals(GameObjectType.GOLDMAN)) {
             checkGoldManActions(actionResult);
         }
 
         checkCommonActions(actionResult);
-        gameFacade.updateMap();
+        gameFacade.updateObjects(movingObject, targetObject);
 
     }
 
@@ -387,6 +389,10 @@ public class FrameGame extends ConfirmCloseFrame implements ActionListener, Move
                 break;
             }
 
+            case HIDE_IN_TREE:{
+                jlabelTurnsLeft.setText(String.valueOf(gameFacade.getTurnsLeftCount()));
+            }
+
         }
 
     }
@@ -402,14 +408,27 @@ public class FrameGame extends ConfirmCloseFrame implements ActionListener, Move
 
     }
 
-    @Override
     protected boolean acceptCloseAction() {
-
         return allowExit();
+    }
 
 
+    @Override
+    protected void setCloseOperation() {
+        super.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
+        super.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+
+                if (acceptCloseAction()) {
+                    closeFrame();
+                }
+            }
+        });
 
     }
+
 
     @Override
     protected void closeFrame() {

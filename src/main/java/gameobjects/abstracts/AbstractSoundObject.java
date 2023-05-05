@@ -40,7 +40,5 @@ public abstract class AbstractSoundObject extends AbstractMovingObject implement
     private void setDieClip() {
         dieClip = openClip(WavPlayer.SOUND_DIE);
     }
-
-
 }
 

@@ -5,8 +5,9 @@ import enums.GameObjectType;
 import gameobjects.impl.*;
 
 public class GameObjectCreator {
+
     // Используется паттерн Singleton - используем единственный
-    // экземпляр класса для того, чтобы мы могли создать объекты в любом месте нашей программы
+    // экземпляр класса для того, чтобы создать объекты в любом месте программы
     private static GameObjectCreator instance;
 
     public static GameObjectCreator getInstance() {

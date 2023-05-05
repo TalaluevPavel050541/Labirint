@@ -9,9 +9,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class SQLiteConnection {
-    // использование паттерна Singleton
+
     private SQLiteConnection() {
     }
+
+    // Используется паттерн Singleton - используем единственный
+    // экземпляр класса для того, чтобы создать объекты в любом месте программы
     private static SQLiteConnection instance;
 
     public static SQLiteConnection getInstance() {

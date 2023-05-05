@@ -22,6 +22,7 @@ public abstract class AbstractGameMap implements TimeMap, Serializable { // Seri
         this.gameCollection = gameCollection;
     }
 
+    @Override
     public MapInfo getMapInfo() {
         return mapInfo;
     }
@@ -37,10 +38,9 @@ public abstract class AbstractGameMap implements TimeMap, Serializable { // Seri
         return (firstObject.getType().getIndexPriority() > secondObject.getType().getIndexPriority()) ? firstObject : secondObject; // сокращенная запись условия if: если первый объект имеет больший приоритет - вернуть его, иначе вернуть второй объект
     }
 
-    public boolean isValidMap() {
-        return mapInfo.isGoldManExist() && mapInfo.isExitExist(); // если есть и вход и выход - карта валидна
-    }
 
+
+    @Override
     public GameCollection getGameCollection() {
         if (gameCollection == null) {
             try {
@@ -56,4 +56,3 @@ public abstract class AbstractGameMap implements TimeMap, Serializable { // Seri
         this.gameCollection = gameCollection;
     }
 }
-

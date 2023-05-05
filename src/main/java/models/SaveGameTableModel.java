@@ -15,7 +15,7 @@ public class SaveGameTableModel extends AbstractTableModel {
     public SaveGameTableModel(ArrayList<SavedMapInfo> list) {
         this.list = list;
     }
-    
+
     public MapInfo getMapInfo(int index){
         return list.get(index);
     }
@@ -73,7 +73,7 @@ public class SaveGameTableModel extends AbstractTableModel {
             case 2:
                 clazz = String.class;
                 break;
-           
+
 
             default:
                 throw new IndexOutOfBoundsException("Column index out of bounds: " + columnIndex);
@@ -105,7 +105,7 @@ public class SaveGameTableModel extends AbstractTableModel {
         }
         return columnName;
     }
-    
+
     public void deleteMapInfo(int index){
         list.remove(index);
     }

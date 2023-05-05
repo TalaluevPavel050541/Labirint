@@ -1,7 +1,7 @@
 package objects;
 
 public class SavedMapInfo extends MapInfo{
-    
+
     private long saveDate;
     private int totalScore;
     private int turnsCount;
@@ -29,8 +29,4 @@ public class SavedMapInfo extends MapInfo{
     public void setTurnsCount(int turnsCount) {
         this.turnsCount = turnsCount;
     }
-
-  
-    
-    
 }

@@ -13,6 +13,6 @@ public class Exit extends AbstractGameObject {
     public Exit(Coordinate coordinate) {
         super.setType(GameObjectType.EXIT);
         super.setCoordinate(coordinate);
-        super.setIcon(getImageIcon("/images/exit.gif"));
+        super.saveIcon("/images/exit.gif");
     }
 }

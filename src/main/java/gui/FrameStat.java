@@ -129,3 +129,4 @@ public class FrameStat extends BaseChildFrame implements ActionListener {
     }
 }
 
+

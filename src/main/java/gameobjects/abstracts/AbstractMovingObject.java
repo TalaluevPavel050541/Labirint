@@ -13,11 +13,11 @@ import java.util.EnumMap;
  * класс, который отвечает за любой движущийся объект. наследуется от класса
  * AbstractGameObject с добавлением функций движения
  */
-public abstract class AbstractMovingObject extends AbstractGameObject implements MovingObject, Serializable {
+public abstract class AbstractMovingObject extends AbstractGameObject implements MovingObject {
 
     private int step = 1;// по-умолчанию у всех объектов шаг равен 1
 
-    protected EnumMap<MovingDirection, ImageIcon> movingImages = new EnumMap<>(MovingDirection.class);
+    protected EnumMap<MovingDirection, ImageIcon> movingImages = new EnumMap<>(MovingDirection.class);// карта иконок для всех направлений
 
     @Override
     public int getStep() {
@@ -32,7 +32,6 @@ public abstract class AbstractMovingObject extends AbstractGameObject implements
 
         // при движении объект должен сменить иконку и произвести звук
         changeIcon(direction);
-//        playSound(); на будушее
 
     }
 
@@ -95,11 +94,7 @@ public abstract class AbstractMovingObject extends AbstractGameObject implements
 
 
     }
-
-
     public void changeIcon(MovingDirection direction) {
         super.setIcon(movingImages.get(direction));
     }
-
-
 }

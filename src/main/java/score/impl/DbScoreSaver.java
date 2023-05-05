@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 public class DbScoreSaver implements ScoreSaver {
 
     private SQLiteConnection sqliteDB = SQLiteConnection.getInstance();
-    
+
 
     @Override
     public ArrayList<UserScore> getScoreList() {
@@ -72,9 +72,9 @@ public class DbScoreSaver implements ScoreSaver {
 
     }
 
-   
 
-    
+
+
 
     private boolean saveAll(UserScore userScore) throws SQLException {
 
@@ -108,9 +108,9 @@ public class DbScoreSaver implements ScoreSaver {
         }
 
     }
-    
-    
-    
+
+
+
 
     @Override
     public boolean saveScore(UserScore userScore) {
@@ -132,5 +132,4 @@ public class DbScoreSaver implements ScoreSaver {
 
         return false;
     }
-
 }

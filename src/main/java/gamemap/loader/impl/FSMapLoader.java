@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
+// класс загрузки карты из файловой системы
 public class FSMapLoader extends AbstractMapLoader {
     private static final String SAVE_EXTENSION = ".sav";
 
@@ -40,7 +40,7 @@ public class FSMapLoader extends AbstractMapLoader {
 
             String strLine = br.readLine().trim(); // считываем первую строку для определения имени, длины, ширины карты. убираем пробела по краям
 
-            // разбиваем первую строку на токены, разделенные запятой.            
+            // разбиваем первую строку на токены, разделенные запятой.
             gameMap.getMapInfo().setMapName(strLine.split(",")[0]);
             gameMap.getMapInfo().setId(1);
 
@@ -62,7 +62,7 @@ public class FSMapLoader extends AbstractMapLoader {
                 y++;
             }
 
-            if (!gameMap.isValidMap()) {
+            if (!gameMap.getMapInfo().isValidMap()) {
                 throw new Exception("The map is not valid!");
             }
 

@@ -18,5 +18,4 @@ public interface MovingObject extends StaticObject {
     ActionResult moveToObject(MovingDirection direction, AbstractGameObject gameObject);
 
     int getStep();
-   
 }

@@ -7,6 +7,7 @@ import gameobjects.interfaces.StaticObject;
 
 import javax.swing.*;
 import java.io.Serializable;
+import java.util.EnumMap;
 import java.util.Objects;
 
 /**
@@ -15,12 +16,12 @@ import java.util.Objects;
  */
 public abstract class AbstractGameObject implements StaticObject, Serializable {
 
+    protected static EnumMap<GameObjectType, ImageIcon> staticImages = new EnumMap<>(GameObjectType.class);// карта иконок для всех направлений
     private GameObjectType type;// все объекты будут иметь тип
     private Coordinate coordinate;// все объекты будут иметь координаты положения
-
     private ImageIcon icon = getImageIcon("/images/noicon.png");// изображение по-умолчанию
 
-    protected AbstractGameObject() {
+    protected AbstractGameObject() {// частый вопрос - нужен ли public конструктор в абстрактном классе
     }
 
     public void setIcon(ImageIcon currentIcon) {
@@ -32,8 +33,7 @@ public abstract class AbstractGameObject implements StaticObject, Serializable {
         return icon;
     }
 
-
-    protected ImageIcon getImageIcon(String path){
+    protected ImageIcon getImageIcon(String path) {
         return new ImageIcon(getClass().getResource(path));
     }
 
@@ -79,5 +79,12 @@ public abstract class AbstractGameObject implements StaticObject, Serializable {
             return false;
         }
         return true;
+    }
+
+    protected void saveIcon(String path) {
+        if (staticImages.get(type) == null) {
+            staticImages.put(type, getImageIcon(path));
+        }
+        setIcon(staticImages.get(type));
     }
 }

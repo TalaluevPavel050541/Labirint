@@ -20,7 +20,6 @@ public class Monster extends AbstractSoundObject {
     public Monster(Coordinate coordinate) {
         super.setType(GameObjectType.MONSTER);
         super.setCoordinate(coordinate);
-        super.setIcon(getImageIcon("/images/monster_up.jpg"));// иконку по-умолчанию (можно сделать реализацию случайного выбора иконки)
 
         if (monsterImages.isEmpty()) {// для всех монстров будут одинаковые картики, поэтому нет смысла создавать для каждого объекта отдельный map
             monsterImages.put(MovingDirection.UP, getImageIcon("/images/monster_up.jpg"));
@@ -28,6 +27,8 @@ public class Monster extends AbstractSoundObject {
             monsterImages.put(MovingDirection.LEFT, getImageIcon("/images/monster_left.jpg"));
             monsterImages.put(MovingDirection.RIGHT, getImageIcon("/images/monster_right.jpg"));
         }
+
+        super.changeIcon(MovingDirection.UP);
 
     }
 

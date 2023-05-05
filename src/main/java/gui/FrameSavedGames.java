@@ -2,7 +2,6 @@ package gui;
 
 import enums.LocationType;
 import gamemap.adapters.HybridMapLoader;
-import gamemap.loader.abstracts.AbstractMapLoader;
 import models.SaveGameTableModel;
 import objects.MapInfo;
 import objects.SavedMapInfo;
@@ -131,9 +130,10 @@ public class FrameSavedGames extends BaseChildFrame {
             case JOptionPane.YES_OPTION: {
 
 
+
                 MapInfo mapInfo = model.getMapInfo(index);
 
-                mapLoader.deleteSavedMap(mapInfo, LocationType.DB);
+                mapLoader.deleteSavedMap(mapInfo,LocationType.DB);
 
                 model.deleteMapInfo(index);
                 model.refresh();
@@ -190,6 +190,5 @@ public class FrameSavedGames extends BaseChildFrame {
         if (list.isEmpty()) {
             MessageManager.showErrorMessage(this, "Сохраненных игр не найдено!");
         }
-
     }
 }

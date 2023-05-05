@@ -10,6 +10,7 @@ import objects.User;
 
 import java.util.ArrayList;
 
+// Паттерн проектирования «Адаптер»
 public class HybridMapLoader {
     
     private DBMapLoader dBMapLoader;
@@ -22,9 +23,7 @@ public class HybridMapLoader {
         fSMapLoader = new FSMapLoader(gameMap);
         this.gameMap = gameMap;
     }
-    
-    
-    
+
     public boolean saveMap(SavedMapInfo mapInfo, LocationType locationType){
         switch (locationType){
             case DB:{
@@ -51,9 +50,7 @@ public class HybridMapLoader {
                 return fSMapLoader.loadMap(mapInfo);
             }
         }
-        
-        
-        
+
         return false;
     }
 

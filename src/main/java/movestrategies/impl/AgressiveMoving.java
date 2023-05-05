@@ -76,3 +76,4 @@ public class AgressiveMoving implements MoveStrategy {
         return movingObject.doAction(objectInNewCoordinate).equals(actionResult);
     }
 }
+

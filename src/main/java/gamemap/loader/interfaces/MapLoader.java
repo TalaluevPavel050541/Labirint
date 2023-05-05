@@ -16,4 +16,5 @@ public interface MapLoader {
 
     boolean deleteSavedMap(MapInfo mapInfo);
 
+
 }

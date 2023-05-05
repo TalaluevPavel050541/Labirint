@@ -1,7 +1,7 @@
 package objects;
 
 public class UserScore {
-    
+
     private User user;
 
     private int score;
@@ -39,10 +39,4 @@ public class UserScore {
     public void setUser(User user) {
         this.user = user;
     }
-
-    
-
-    
-
-    
 }

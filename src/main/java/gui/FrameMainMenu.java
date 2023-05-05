@@ -18,7 +18,7 @@ import java.awt.*;
 import java.util.List;
 
 
-public class FrameMainMenu extends javax.swing.JFrame {
+public class FrameMainMenu extends JFrame {
 
     private JDialog splashDialog;
     private FrameGame frameGame;
@@ -245,7 +245,7 @@ public class FrameMainMenu extends javax.swing.JFrame {
      * выход из игры
      */
     private void quit() {
-        System.exit(0);
+        System.exit(0);// не рекомендуется так делать, т.к. могут быть другие процессы
 
     }
 
@@ -284,6 +284,7 @@ public class FrameMainMenu extends javax.swing.JFrame {
          * Create and display the form
          */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new FrameMainMenu().setVisible(true);
             }
