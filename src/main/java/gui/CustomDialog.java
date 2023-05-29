@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-
+//класс диалогового окна
 public class CustomDialog extends javax.swing.JDialog implements ActionListener, PropertyChangeListener {
 
     private StringValidator nameValidator = new NameValidator();

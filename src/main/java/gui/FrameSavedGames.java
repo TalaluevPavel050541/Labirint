@@ -9,7 +9,7 @@ import utils.MessageManager;
 
 import javax.swing.*;
 import java.util.ArrayList;
-
+// класс, отвечающий за сохранение игры
 public class FrameSavedGames extends BaseChildFrame {
 
     private HybridMapLoader mapLoader;
@@ -116,10 +116,10 @@ public class FrameSavedGames extends BaseChildFrame {
     private void jbtnReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnReturnActionPerformed
         closeFrame();
     }//GEN-LAST:event_jbtnReturnActionPerformed
-
+// кнопка удалить игру из списка сохраненных игр пользователя
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
 
-        int index = jTableSaves.getSelectedRow();
+        int index = jTableSaves.getSelectedRow(); // получить выделенную строку
 
         if (index < 0) {
             return;
@@ -133,10 +133,10 @@ public class FrameSavedGames extends BaseChildFrame {
 
                 MapInfo mapInfo = model.getMapInfo(index);
 
-                mapLoader.deleteSavedMap(mapInfo,LocationType.DB);
+                mapLoader.deleteSavedMap(mapInfo,LocationType.DB); // удалить сохраненную карту
 
-                model.deleteMapInfo(index);
-                model.refresh();
+                model.deleteMapInfo(index);//удалить информацию из таблицы Map по идентификатору
+                model.refresh(); // обновить форму
 
 
                 break;
@@ -146,22 +146,22 @@ public class FrameSavedGames extends BaseChildFrame {
 
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
-
+//кнопка загрузить игру из списка сохраненных игр пользовтаеля
     private void btnLoadGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadGameActionPerformed
 
-        int index = jTableSaves.getSelectedRow();
+        int index = jTableSaves.getSelectedRow(); // получение выделенной строки
 
         if (index < 0) {
             return;
         }
 
-        MapInfo mapInfo = model.getMapInfo(index);
+        MapInfo mapInfo = model.getMapInfo(index); // поиск карты по идентификатору
 
-        mapLoader.loadMap(mapInfo, LocationType.DB);
+        mapLoader.loadMap(mapInfo, LocationType.DB); // загрузка карты из БД
 
-        closeFrame();
+        closeFrame();// закрытие окна
 
-        frameGame.showFrame(getParentFrame());
+        frameGame.showFrame(getParentFrame()); // показ окна
 
     }//GEN-LAST:event_btnLoadGameActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -173,7 +173,7 @@ public class FrameSavedGames extends BaseChildFrame {
     // End of variables declaration//GEN-END:variables
 
     @Override
-    protected void showFrame(JFrame parent) {
+    protected void showFrame(JFrame parent) { // показ окна
 
         list = mapLoader.getSavedMapList(mapLoader.getGameMap().getMapInfo().getUser(), LocationType.DB);
 
@@ -182,8 +182,6 @@ public class FrameSavedGames extends BaseChildFrame {
         jTableSaves.setModel(model);
 
         jTableSaves.setRowHeight(40);
-
-
 
         super.showFrame(parent);
 

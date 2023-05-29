@@ -11,8 +11,8 @@ import gameobjects.impl.Coordinate;
 public class Wall extends AbstractGameObject {
 
     public Wall(Coordinate coordinate) {
-        super.setType(GameObjectType.WALL);
-        super.setCoordinate(coordinate);
-        super.saveIcon("/images/wall.png");
+        super.setType(GameObjectType.WALL); // запись объекта стена
+        super.setCoordinate(coordinate); // запись координаты
+        super.saveIcon("/images/wall.png"); // сохранение иконки для дерева
     }
 }

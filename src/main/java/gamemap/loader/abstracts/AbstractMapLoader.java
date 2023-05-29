@@ -17,34 +17,34 @@ import java.util.logging.Logger;
 
 public abstract class AbstractMapLoader implements MapLoader {
 
-    protected AbstractGameMap gameMap;
+    protected AbstractGameMap gameMap; // объект базовой карты
 
     protected AbstractMapLoader(AbstractGameMap gameMap) {
         this.gameMap = gameMap;
-    }
+    } // конструктор класса
 
-    protected void createGameObject(String str, Coordinate coordinate) {
+    protected void createGameObject(String str, Coordinate coordinate) { // создание объекта по типу объекта и координатам
 
-        GameObjectType type = GameObjectType.valueOf(str.toUpperCase());
+        GameObjectType type = GameObjectType.valueOf(str.toUpperCase()); // создаются все объекты из карты (монстры, стена, дерево, пустота, сокровище, персонаж, дерево)
 
+         // получили доступ к экзмепляру класса GameObjectCreator - получили объект по типу и координате
+        AbstractGameObject newObj = GameObjectCreator.getInstance().createObject(type, coordinate); // паттерн Одиночка
 
-        AbstractGameObject newObj = GameObjectCreator.getInstance().createObject(type, coordinate);
-
-        gameMap.getGameCollection().addGameObject(newObj);
-
+        gameMap.getGameCollection().addGameObject(newObj); // добавление нового объекта в коллекцию
+//карта должна содержать вход и выход
         if (newObj.getType() == GameObjectType.EXIT) {
-            gameMap.getMapInfo().setExitExist(true);
+            gameMap.getMapInfo().setExitExist(true); // проверка на выход на карте
         } else if (newObj.getType() == GameObjectType.GOLDMAN) {
-            gameMap.getMapInfo().setGoldManExist(true);
+            gameMap.getMapInfo().setGoldManExist(true);//проверка на вход на карте
         }
 
     }
 
     public AbstractGameMap getGameMap() {
         return gameMap;
-    }
+    } // получение карты
 
-    public int getPlayerId(String username) {
+    public int getPlayerId(String username) { // получить пользователя по id
 
         PreparedStatement selectStmt = null;
         PreparedStatement insertStmt = null;

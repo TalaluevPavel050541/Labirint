@@ -12,14 +12,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+//класс для работы с очками из БД
 public class DbScoreSaver implements ScoreSaver {
 
-    private SQLiteConnection sqliteDB = SQLiteConnection.getInstance();
+    private SQLiteConnection sqliteDB = SQLiteConnection.getInstance(); // реализация Синглетона
 
 
     @Override
-    public ArrayList<UserScore> getScoreList() {
+    public ArrayList<UserScore> getScoreList() { // получение списка очков из БД
 
         PreparedStatement selectStmt = null;
         ArrayList<UserScore> list = new ArrayList<>();
@@ -41,11 +41,11 @@ public class DbScoreSaver implements ScoreSaver {
             while (rs.next()) {
                 UserScore userScore = new UserScore();
 
-                userScore.setUser(new User(rs.getString("username")));
-                userScore.setPlayDate(rs.getLong("play_date"));
-                userScore.setScore(rs.getInt("score"));
-                userScore.setPlayDate(rs.getLong("play_date"));
-                userScore.setPlayCount(rs.getInt("play_count"));
+                userScore.setUser(new User(rs.getString("username"))); // запись пользователя в БД
+                userScore.setPlayDate(rs.getLong("play_date")); // запись даты в БД
+                userScore.setScore(rs.getInt("score")); // запись очков в БД
+                userScore.setPlayDate(rs.getLong("play_date"));// запись даты в БД
+                userScore.setPlayCount(rs.getInt("play_count"));// запись количетсва шагов пользователя
 
                 list.add(userScore);
             }
@@ -76,7 +76,7 @@ public class DbScoreSaver implements ScoreSaver {
 
 
 
-    private boolean saveAll(UserScore userScore) throws SQLException {
+    private boolean saveAll(UserScore userScore) throws SQLException { // сохранение информации о пользователе в БД
 
 
         PreparedStatement insertStmt = null;
@@ -84,7 +84,7 @@ public class DbScoreSaver implements ScoreSaver {
         int result = 0;
 
         try {
-
+// заполнение таблицы score
             insertStmt = sqliteDB.getConnection().prepareStatement("insert into score(player_id, score, play_date) values(?,?,?)");
 
             insertStmt.setInt(1, userScore.getUser().getId());
@@ -113,7 +113,7 @@ public class DbScoreSaver implements ScoreSaver {
 
 
     @Override
-    public boolean saveScore(UserScore userScore) {
+    public boolean saveScore(UserScore userScore) { // сохранение очков в БД
         try {
 
             sqliteDB.getConnection().setAutoCommit(false);

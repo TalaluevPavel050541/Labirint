@@ -17,7 +17,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-
+// запускает приложение и отображает графический интерфейс меню игры
 public class FrameMainMenu extends JFrame {
 
     private JDialog splashDialog;
@@ -163,13 +163,12 @@ public class FrameMainMenu extends JFrame {
             }
         }
     }// </editor-fold>//GEN-END:initComponents
-
+    //нажали на кнопку новая игра
     private void jbtnNewGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnNewGameActionPerformed
 
         if (!saveUser()) {
             return;
         }
-
 
         showSplash();
         SwingWorker<Void, Integer> worker = new SwingWorker<Void, Integer>() {
@@ -177,15 +176,15 @@ public class FrameMainMenu extends JFrame {
             protected Void doInBackground() throws Exception {
 
                 MapInfo mapInfo = new MapInfo();
-                mapInfo.setLevelId(MAP_LEVEL_ONE);
+                mapInfo.setLevelId(MAP_LEVEL_ONE); // уровень сложности для карты всегда 1
 
-                if (!mapLoader.loadMap(mapInfo, LocationType.FS)) {
+                if (!mapLoader.loadMap(mapInfo, LocationType.FS)) { // загрузка карты из файловой системы
                     throw new Exception("Error loading map!");
                 }
 
                 gameFacade.setMapLoader(mapLoader);
 
-                createFrameGame();
+                createFrameGame(); //создание формы FrameGame
 
                 Thread.sleep(1000);
                 return null;
@@ -238,14 +237,14 @@ public class FrameMainMenu extends JFrame {
             frameSavedGames = new FrameSavedGames(mapLoader, frameGame);
         }
 
-        frameSavedGames.showFrame(this);
+        frameSavedGames.showFrame(this); // показать форму
     }//GEN-LAST:event_jbtnLoadGameActionPerformed
 
     /**
      * выход из игры
      */
     private void quit() {
-        System.exit(0);// не рекомендуется так делать, т.к. могут быть другие процессы
+        System.exit(0);
 
     }
 
@@ -309,21 +308,22 @@ public class FrameMainMenu extends JFrame {
         return usernameDialog.getValidatedText();
     }
 
+    //проверка сохранен ли пользователь
     private boolean saveUser() {// сохранить пользователя, получить его id
 
         String username = getUserNameDialog();
 
         if (username != null && !username.trim().equals("")) {
 
-            if (user != null && user.getUsername().equals(username)) {// если ввел того же пользователя (т.е. ничего не менял)
+            if (user != null && user.getUsername().equals(username)) {// если ввели того же пользователя (т.е. ничего не меняли)
                 return true;
             }
 
-            user = new User();
-            user.setUsername(username);
-            user.setId(mapLoader.getPlayerId(username));
+            user = new User(); //создание объекта нового пользователя
+            user.setUsername(username); //запись имени
+            user.setId(mapLoader.getPlayerId(username));//запись id
 
-            gameMap.getMapInfo().setUser(user);
+            gameMap.getMapInfo().setUser(user);// получение карты  и сохранение пользователя для этой карты
 
             return true;
         }

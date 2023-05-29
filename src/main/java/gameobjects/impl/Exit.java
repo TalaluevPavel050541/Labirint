@@ -11,8 +11,8 @@ import gameobjects.impl.Coordinate;
 public class Exit extends AbstractGameObject {
 
     public Exit(Coordinate coordinate) {
-        super.setType(GameObjectType.EXIT);
-        super.setCoordinate(coordinate);
-        super.saveIcon("/images/exit.gif");
+        super.setType(GameObjectType.EXIT); // запись типа
+        super.setCoordinate(coordinate); //запись координаты для объекта
+        super.saveIcon("/images/exit.gif"); // сохранение иконки для объекта
     }
 }

@@ -2,7 +2,7 @@ package utils;
 
 import javax.swing.*;
 import java.awt.*;
-
+//служебный класс для показа диалогового окна с сообщениями
 public class MessageManager {
 
     public static void showInformMessage(Component comp, String message) {

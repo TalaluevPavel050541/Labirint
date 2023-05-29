@@ -10,7 +10,7 @@ public class GameObjectCreator {
     // экземпляр класса для того, чтобы создать объекты в любом месте программы
     private static GameObjectCreator instance;
 
-    public static GameObjectCreator getInstance() {
+    public static GameObjectCreator getInstance() { // метод получения доступа к экземпляру класса
         if (instance == null) {
             instance = new GameObjectCreator();
         }
@@ -20,7 +20,7 @@ public class GameObjectCreator {
     private GameObjectCreator() {
     }
 
-    public AbstractGameObject createObject(GameObjectType type, Coordinate coordinate) {
+    public AbstractGameObject createObject(GameObjectType type, Coordinate coordinate) { // создание объекта в зависимости от типа
         AbstractGameObject obj = null;
 
         switch (type) {

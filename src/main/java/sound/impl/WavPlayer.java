@@ -10,7 +10,7 @@ import javax.sound.sampled.*;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+//класс для работы со звуком, является подписчиком для слушателя по паттерну Наблюдатель
 public class WavPlayer implements MoveResultListener, SoundPlayer {
 
     public static final String SOUND_BACKGROUND = "background.wav";
@@ -25,13 +25,13 @@ public class WavPlayer implements MoveResultListener, SoundPlayer {
 
     public WavPlayer() {
 
-        AudioInputStream ais = null;
+        AudioInputStream ais = null; // библиотека для работы со звуковыми файлами
         try {
-            backGroundClip = AudioSystem.getClip();
-            ais = AudioSystem.getAudioInputStream(this.getClass().getResource(WavPlayer.SOUND_PATH + SOUND_BACKGROUND));
-            backGroundClip.open(ais);
+            backGroundClip = AudioSystem.getClip(); // получение клипа для проигрывания фоновой музыки
+            ais = AudioSystem.getAudioInputStream(this.getClass().getResource(WavPlayer.SOUND_PATH + SOUND_BACKGROUND)); // получение музыкального клипа
+            backGroundClip.open(ais);//открываем поток
 
-        } catch (UnsupportedAudioFileException ex) {
+        } catch (UnsupportedAudioFileException ex) { //в случае ошибки выводятся логи с сообщениями
             Logger.getLogger(WavPlayer.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(WavPlayer.class.getName()).log(Level.SEVERE, null, ex);
@@ -44,37 +44,37 @@ public class WavPlayer implements MoveResultListener, SoundPlayer {
     @Override
     public void startBackgroundMusic(String soundName) {
         playSound(backGroundClip, true);
-    }
+    } //воспроизведение фоновой музыки
 
     @Override
-    public void stopBackgoundMusic() {
+    public void stopBackgoundMusic() { //остановка фоновой музыки
         if (backGroundClip != null && backGroundClip.isRunning()) {
             backGroundClip.stop();
         }
 
     }
 
-    @Override
+    @Override //уведомление о событии
     public void notifyActionResult(ActionResult actionResult, final AbstractGameObject abstractMovingObject, final AbstractGameObject targetObject) {
 
-        if (!(abstractMovingObject instanceof SoundObject)) {
+        if (!(abstractMovingObject instanceof SoundObject)) { // проверка объекта
             return;
         }
 
         SoundObject soundObject = (SoundObject) abstractMovingObject;
 
-        Clip clip = soundObject.getSoundClip(actionResult);
-
-        playSound(clip, false);
+        Clip clip = soundObject.getSoundClip(actionResult); //получение музыкального файла в зависимости от типа события, происходящего на карте
+//музыка на карте меняется в зависимости от события
+        playSound(clip, false); //проигрывание файла музыкального
 
     }
 
     @Override
-    public void playSound(final Clip clip, final boolean loop) {
+    public void playSound(final Clip clip, final boolean loop) { //проигрывание файла музыкального
 
         Thread thread = new Thread(new Runnable() {
             @Override
-            public void run() {
+            public void run() { //работа с потоками в Java
 
                 if (clip == null) {
                     return;
@@ -96,7 +96,7 @@ public class WavPlayer implements MoveResultListener, SoundPlayer {
             }
         });
 
-        thread.setDaemon(true);
+        thread.setDaemon(true); // работа с потоками в Java
         thread.start();
     }
 }

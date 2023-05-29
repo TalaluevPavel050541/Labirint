@@ -22,7 +22,7 @@ public class FSMapLoader extends AbstractMapLoader {
 
 
     @Override
-    public boolean loadMap(MapInfo mapInfo) {
+    public boolean loadMap(MapInfo mapInfo) { // загрузка новой карты из файла
         File file = new File("game.map");
         if (!file.exists()) {
             throw new IllegalArgumentException("filename must not be empty!");
@@ -79,9 +79,9 @@ public class FSMapLoader extends AbstractMapLoader {
 
 
     @Override
-    public boolean saveMap(SavedMapInfo mapInfo) {
+    public boolean saveMap(SavedMapInfo mapInfo) { //метод сохранения карты
 
-        File f = new File("save");
+        File f = new File("save"); //стандартные библиотеки Java для работы с файлами
 
         if (!f.exists()) {
             f.mkdir();
@@ -101,7 +101,7 @@ public class FSMapLoader extends AbstractMapLoader {
         return false;
     }
 
-    private int getLineCount(File file) {
+    private int getLineCount(File file) { // считывание построчно файла карты
         BufferedReader reader = null;
         int lineCount = 0;
         try {
@@ -126,13 +126,13 @@ public class FSMapLoader extends AbstractMapLoader {
     }
 
     @Override
-    public ArrayList<SavedMapInfo> getSavedMapList(User user) {
+    public ArrayList<SavedMapInfo> getSavedMapList(User user) { // метод для файловой системы не реализуется, только для БД
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public boolean deleteSavedMap(MapInfo mapInfo) {
         throw new UnsupportedOperationException("Not supported yet.");
-    }
+    } // метод для файловой системы не реализуется, только для БД
 }
 

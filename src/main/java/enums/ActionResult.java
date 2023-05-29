@@ -3,7 +3,7 @@ package enums;
 /**
  * типы действий, которые могут произойти после движения игрока по карте
  */
-public enum ActionResult {
+public enum ActionResult { //перечисление констант
 
     HIDE_IN_TREE,// спрятаться в дереве
     NO_ACTION,// ничего не происходит

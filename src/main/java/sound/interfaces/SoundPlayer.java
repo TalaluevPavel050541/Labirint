@@ -6,9 +6,9 @@ import javax.sound.sampled.Clip;
 public interface SoundPlayer {
 
 
-    void startBackgroundMusic(String soundName);
+    void startBackgroundMusic(String soundName); // запуск музыкального клипа
 
-    void stopBackgoundMusic();
+    void stopBackgoundMusic(); // остановка музыкального клипа
 
-    void playSound(Clip clip, boolean loop);
+    void playSound(Clip clip, boolean loop); // проигрывание музыкального клипа
 }

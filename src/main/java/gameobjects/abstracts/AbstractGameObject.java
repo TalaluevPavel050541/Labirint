@@ -21,42 +21,42 @@ public abstract class AbstractGameObject implements StaticObject, Serializable {
     private Coordinate coordinate;// все объекты будут иметь координаты положения
     private ImageIcon icon = getImageIcon("/images/noicon.png");// изображение по-умолчанию
 
-    protected AbstractGameObject() {// частый вопрос - нужен ли public конструктор в абстрактном классе
+    protected AbstractGameObject() {//конструктор без параметров для класса
     }
 
     public void setIcon(ImageIcon currentIcon) {
         this.icon = currentIcon;
-    }
+    } // меттод сеттер для присвоения иконки
 
     @Override
     public ImageIcon getIcon() {
         return icon;
-    }
+    } // меттод геттер для получения иконки
 
-    protected ImageIcon getImageIcon(String path) {
+    protected ImageIcon getImageIcon(String path) { // получение иконки по указанному пути
         return new ImageIcon(getClass().getResource(path));
     }
 
     @Override
     public GameObjectType getType() {
         return type;
-    }
+    } // метод получения типа объекта
 
     public void setType(GameObjectType type) {
         this.type = type;
-    }
+    } // метод присвоения типа объекта
 
     @Override
     public Coordinate getCoordinate() {
         return coordinate;
-    }
+    } // метод получения координаты
 
     public void setCoordinate(Coordinate coordinate) {
         this.coordinate = coordinate;
-    }
+    } // метод присвоения координаты
 
     @Override
-    public int hashCode() {
+    public int hashCode() { // это метод для получения уникального целочисленного номера объекта, своего рода его идентификатор. Благодаря хешу (номеру) можно, например, быстро определить местонахождение объекта в коллекции.
         int hash = 5;
         hash = 43 * hash + Objects.hashCode(this.type);
         hash = 43 * hash + Objects.hashCode(this.coordinate);
@@ -64,7 +64,7 @@ public abstract class AbstractGameObject implements StaticObject, Serializable {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(Object obj) { // метод проверки на сравнение объектов Данный метод проверяет два объекта одного происхождения на логическую равность.
         if (obj == null) {
             return false;
         }
@@ -81,10 +81,10 @@ public abstract class AbstractGameObject implements StaticObject, Serializable {
         return true;
     }
 
-    protected void saveIcon(String path) {
-        if (staticImages.get(type) == null) {
-            staticImages.put(type, getImageIcon(path));
+    protected void saveIcon(String path) { // метод сохранения иконки с указанием пути ее расположения
+        if (staticImages.get(type) == null) { // если в коллекции нет данных по типу объекта
+            staticImages.put(type, getImageIcon(path)); //то мы добавляем эти данные, указывая тип и путь (смотрите коллекции в Java, в данном случае используются методы коллекции Map, это стандартные методы библиотеки коллекций)
         }
-        setIcon(staticImages.get(type));
+        setIcon(staticImages.get(type)); // получение данных из коллекции по ключу - тип объекта
     }
 }

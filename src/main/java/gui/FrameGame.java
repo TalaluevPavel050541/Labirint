@@ -2,7 +2,6 @@ package gui;
 
 import gamemap.facades.GameFacade;
 import gameobjects.abstracts.AbstractGameObject;
-import gameobjects.abstracts.AbstractMovingObject;
 import enums.ActionResult;
 import enums.GameObjectType;
 import enums.MovingDirection;
@@ -14,7 +13,8 @@ import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-
+//еще один класс, который является подписчиком для паттерна Наблюдатель и реализует интерфейс слушателя
+// класс, отвечающий за вывод сообщений на экран, нажатие кнопок, за отображение компонентов и за слушание событий
 public class FrameGame extends BaseChildFrame implements ActionListener, MoveResultListener {
 
     private static final String MESSAGE_SAVE = "Сохранить игру перед выходом?";
@@ -27,7 +27,7 @@ public class FrameGame extends BaseChildFrame implements ActionListener, MoveRes
     /**
      * Creates new form FrameGame
      */
-    public FrameGame(GameFacade resultFacade) {
+    public FrameGame(GameFacade resultFacade) { //реализация паттерна Фасад
         this.gameFacade = resultFacade;
         initComponents();
     }
@@ -232,83 +232,87 @@ public class FrameGame extends BaseChildFrame implements ActionListener, MoveRes
 
     public void actionPerformed(java.awt.event.ActionEvent evt) {
         if (evt.getSource() == jbtnLeft) {
-            FrameGame.this.jbtnLeftActionPerformed(evt);
+            FrameGame.this.jbtnLeftActionPerformed(evt); // кнопка влево
         }
         else if (evt.getSource() == jbtnUp) {
-            FrameGame.this.jbtnUpActionPerformed(evt);
+            FrameGame.this.jbtnUpActionPerformed(evt); //кнопка вверх
         }
         else if (evt.getSource() == jbtnRight) {
-            FrameGame.this.jbtnRightActionPerformed(evt);
+            FrameGame.this.jbtnRightActionPerformed(evt); //кнопка вправо
         }
         else if (evt.getSource() == jbtnDown) {
-            FrameGame.this.jbtnDownActionPerformed(evt);
+            FrameGame.this.jbtnDownActionPerformed(evt); //кнопка вниз
         }
         else if (evt.getSource() == jbtnSave) {
-            FrameGame.this.jbtnSaveActionPerformed(evt);
+            FrameGame.this.jbtnSaveActionPerformed(evt); //кнопка сохранить
         }
         else if (evt.getSource() == jbtnExit) {
-            FrameGame.this.jbtnExitActionPerformed(evt);
+            FrameGame.this.jbtnExitActionPerformed(evt);//кнопка закрыть
         }
-        else if (evt.getSource() == jmenuExit) {
+        else if (evt.getSource() == jmenuExit) { //кнопка закрыть из меню - вкладка Файл
             FrameGame.this.jmenuExitActionPerformed(evt);
         }
-        else if (evt.getSource() == jmenuStat) {
+        else if (evt.getSource() == jmenuStat) { //кнопка статистика из меню - вкладка Сервис
             FrameGame.this.jmenuStatActionPerformed(evt);
         }
-        else if (evt.getSource() == jmenuSave) {
+        else if (evt.getSource() == jmenuSave) { //кнопка сохранить из меню - вкладка Файл
             FrameGame.this.jmenuSaveActionPerformed(evt);
         }
     }// </editor-fold>//GEN-END:initComponents
 
+    //книпока вверх
     private void jbtnUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnUpActionPerformed
-        gameFacade.moveObject(MovingDirection.UP, GameObjectType.GOLDMAN);
+        gameFacade.moveObject(MovingDirection.UP, GameObjectType.GOLDMAN);// реализация движения для персонажа по направлению
     }//GEN-LAST:event_jbtnUpActionPerformed
 
+    //кнопка влево
     private void jbtnLeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnLeftActionPerformed
-        gameFacade.moveObject(MovingDirection.LEFT, GameObjectType.GOLDMAN);
+        gameFacade.moveObject(MovingDirection.LEFT, GameObjectType.GOLDMAN); // реализация движения для персонажа по направлению
     }//GEN-LAST:event_jbtnLeftActionPerformed
-
+//кнопка вниз
     private void jbtnDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnDownActionPerformed
-        gameFacade.moveObject(MovingDirection.DOWN, GameObjectType.GOLDMAN);
+        gameFacade.moveObject(MovingDirection.DOWN, GameObjectType.GOLDMAN); // реализация движения для персонажа по направлению
     }//GEN-LAST:event_jbtnDownActionPerformed
-
+//кнопка вправо
     private void jbtnRightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnRightActionPerformed
-        gameFacade.moveObject(MovingDirection.RIGHT, GameObjectType.GOLDMAN);
+        gameFacade.moveObject(MovingDirection.RIGHT, GameObjectType.GOLDMAN); // реализация движения для персонажа по направлению
     }//GEN-LAST:event_jbtnRightActionPerformed
-
+// кнопка сохранить
     private void jbtnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnSaveActionPerformed
-        saveMap();
+        saveMap(); // сохранение карты
     }//GEN-LAST:event_jbtnSaveActionPerformed
-
+//кнопка выхода
     private void jbtnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnExitActionPerformed
-        if (allowExit()) {
+        if (allowExit()) { // проверка на разрешение закрытия
             closeFrame();
         }
     }//GEN-LAST:event_jbtnExitActionPerformed
-
+// кнопка начала игры из меню
     private void jmenuStatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmenuStatActionPerformed
-        gameFacade.stopGame();
+        gameFacade.stopGame(); // остановка игры
         if (frameStat == null) {
             frameStat = new FrameStat(new CloseFrameListener() {
                 @Override
                 public void onCloseAction() {
-                    gameFacade.startGame();
+                    gameFacade.startGame(); // запуск игры
                 }
             });
 
         }
 
-        frameStat.setList(gameFacade.getScoreSaver().getScoreList());
-        frameStat.showFrame(this);
+        frameStat.setList(gameFacade.getScoreSaver().getScoreList()); //запись полученных очков
+        frameStat.showFrame(this); // показ формы
 
     }//GEN-LAST:event_jmenuStatActionPerformed
 
+    //кнопка закрыть из меню - из вкладки Файл
     private void jmenuExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmenuExitActionPerformed
-        if (allowExit()) {
-            closeFrame();
+        if (allowExit()) { // проверка на разрешение закрытия
+            closeFrame(); // закрытие формы
         }
     }//GEN-LAST:event_jmenuExitActionPerformed
 
+    //кнопка сохранить из меню - из вкладки Файл
     private void jmenuSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmenuSaveActionPerformed
         saveMap();
     }//GEN-LAST:event_jmenuSaveActionPerformed
@@ -336,72 +340,72 @@ public class FrameGame extends BaseChildFrame implements ActionListener, MoveRes
 
     @Override
     protected void showFrame(JFrame parent) {
-        initMap();
-        super.showFrame(parent);
+        initMap();//инициализация карты
+        super.showFrame(parent); //показ окна
     }
 
-    private void initMap() {
-        gameFacade.addMoveListener(this);
+    private void initMap() {//инициализация карты
+        gameFacade.addMoveListener(this); //добавление слушателя - то есть является слушателем
 
-        jPanelMap.removeAll();
-        jPanelMap.add(gameFacade.getMap());
+        jPanelMap.removeAll();//удаление всех компонентов
+        jPanelMap.add(gameFacade.getMap()); // добавление карты в форму
 
-        jlabelTurnsLeft.setText(String.valueOf(gameFacade.getTurnsLeftCount()));
-        jlabelScore.setText(String.valueOf(gameFacade.getTotalScore()));
+        jlabelTurnsLeft.setText(String.valueOf(gameFacade.getTurnsLeftCount())); //запись остатка шагов в текст
+        jlabelScore.setText(String.valueOf(gameFacade.getTotalScore()));//запись общего количества очков в текст
 
-        gameFacade.startGame();
+        gameFacade.startGame(); //запуск игры
     }
 
-    @Override
+    @Override //реализация наблюдателя - реагирование на событие
     public void notifyActionResult(ActionResult actionResult, AbstractGameObject movingObject, AbstractGameObject targetObject) {
 
-        if (movingObject.getType().equals(GameObjectType.GOLDMAN)) {
-            checkGoldManActions(actionResult);
+        if (movingObject.getType().equals(GameObjectType.GOLDMAN)) { //для персонажа
+            checkGoldManActions(actionResult); // выбор действия в зависимости от события
         }
 
-        checkCommonActions(actionResult);
-        gameFacade.updateObjects(movingObject, targetObject);
+        checkCommonActions(actionResult); // действие в случае смерти персонажа
+        gameFacade.updateObjects(movingObject, targetObject); //обновление объектов в коллекции
 
     }
 
     private void checkGoldManActions(ActionResult actionResult) {
-        switch (actionResult) {
-            case MOVE: {
+        switch (actionResult) { // действия на форме в зависимости от событий на карте игры
+            case MOVE: { // движение
 
-                jlabelTurnsLeft.setText(String.valueOf(gameFacade.getTurnsLeftCount()));
+                jlabelTurnsLeft.setText(String.valueOf(gameFacade.getTurnsLeftCount())); //запись остатка шагов персонажа
 
-                if (gameFacade.getTurnsLeftCount() == 0) {
-                    closeFrame(MESSAGE_DIE);
+                if (gameFacade.getTurnsLeftCount() == 0) { //если лимит шагов исчерпан, то
+                    closeFrame(MESSAGE_DIE); //закрытие формы
                 }
 
                 break;
             }
 
-            case WIN: {
-                closeFrame(MESSAGE_WIN + gameFacade.getTotalScore());
-                gameFacade.saveScore();
+            case WIN: { // выиграл
+                closeFrame(MESSAGE_WIN + gameFacade.getTotalScore()); // вывод сообщения и получение общего коли-ва очков
+                gameFacade.saveScore(); //сохранение очков
             }
 
 
-            case COLLECT_TREASURE: {
-                jlabelScore.setText(String.valueOf(gameFacade.getTotalScore()));
-                jlabelTurnsLeft.setText(String.valueOf(gameFacade.getTurnsLeftCount()));
+            case COLLECT_TREASURE: { //сбор сокровища
+                jlabelScore.setText(String.valueOf(gameFacade.getTotalScore())); // запись текста - получение общего количества очков
+                jlabelTurnsLeft.setText(String.valueOf(gameFacade.getTurnsLeftCount())); // запись остатка шагов персонажа
                 break;
             }
 
-            case HIDE_IN_TREE:{
-                jlabelTurnsLeft.setText(String.valueOf(gameFacade.getTurnsLeftCount()));
+            case HIDE_IN_TREE:{ //прячется за деревом
+                jlabelTurnsLeft.setText(String.valueOf(gameFacade.getTurnsLeftCount())); // запись остатка шагов персонажа
             }
 
         }
 
     }
 
-    private void checkCommonActions(ActionResult actionResult) {
+    private void checkCommonActions(ActionResult actionResult) { //в случае смерти персонажа - закрытие формы
         switch (actionResult) {
 
             case DIE: {
-                closeFrame(MESSAGE_DIE);
+                closeFrame(MESSAGE_DIE); // закрытие формы при получении события Умер
                 break;
             }
         }
@@ -410,19 +414,19 @@ public class FrameGame extends BaseChildFrame implements ActionListener, MoveRes
 
     protected boolean acceptCloseAction() {
         return allowExit();
-    }
+    } //решение о закрытии формы
 
 
     @Override
     protected void setCloseOperation() {
-        super.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        super.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);// Операция закрытия окна по умолчанию "ничего не делать".
 
         super.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
 
-                if (acceptCloseAction()) {
-                    closeFrame();
+                if (acceptCloseAction()) { // true
+                    closeFrame(); // закрываем фрейм
                 }
             }
         });
@@ -431,49 +435,47 @@ public class FrameGame extends BaseChildFrame implements ActionListener, MoveRes
 
 
     @Override
-    protected void closeFrame() {
-        gameFacade.stopGame();
-        super.closeFrame();
+    protected void closeFrame() { // закрытие формы
+        gameFacade.stopGame(); // остановка игры
+        super.closeFrame(); //закрытие формы
     }
 
-    private void closeFrame(final String message) {
+    private void closeFrame(final String message) { //закрытие формы с выводом сообщения
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
                 MessageManager.showInformMessage(null, message);
             }
-        });
-
-        closeFrame();
+        }); // вывод сообщения на экран
+        closeFrame(); //закрытие формы
     }
 
-    private boolean allowExit() {
-        gameFacade.stopGame();
+    private boolean allowExit() { // разрешение о закрытии формы
+        gameFacade.stopGame(); // остановка игры, чтобы монстр не мог двигаться перед выводом диалогового окна
 
-
-        int result = MessageManager.showYesNoCancelMessage(this, MESSAGE_SAVE);
+        int result = MessageManager.showYesNoCancelMessage(this, MESSAGE_SAVE); //вывод сообщения Сохранить игру перед выходом
         switch (result) {
-            case JOptionPane.YES_OPTION: {
-                gameFacade.saveMap();
-                MessageManager.showInformMessage(this, MESSAGE_SAVED_SUCCESS);
+            case JOptionPane.YES_OPTION: { //да
+                gameFacade.saveMap(); //сохранение карты
+                MessageManager.showInformMessage(this, MESSAGE_SAVED_SUCCESS); //вывод сообщения
                 break;
             }
-            case JOptionPane.NO_OPTION: {
-                closeFrame();
+            case JOptionPane.NO_OPTION: { //нет
+                closeFrame(); //закрытие формы
                 break;
             }
-            case JOptionPane.CANCEL_OPTION: {
-                gameFacade.startGame();
+            case JOptionPane.CANCEL_OPTION: { //закрыть
+                gameFacade.startGame(); // запуск игры
                 return false;
             }
 
         }
 
-        return true;
+        return true; //возврат true
     }
 
-    private void saveMap() {
-        gameFacade.saveMap();
-        closeFrame(MESSAGE_SAVED_SUCCESS);
+    private void saveMap() { //метод сохранения карты
+        gameFacade.saveMap(); // сохранение карты
+        closeFrame(MESSAGE_SAVED_SUCCESS); // вывод сообщения об успешном сохранении
     }
 }

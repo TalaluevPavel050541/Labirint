@@ -1,13 +1,13 @@
 package objects;
-
+//таблица в БД score
 public class UserScore {
 
-    private User user;
+    private User user; // класс пользователя
 
-    private int score;
-    private long playDate;
-    private int playCount;
-
+    private int score; // количество очков
+    private long playDate; // дата
+    private int playCount; // сколько раз сыграл пользователь - кол-во игр пользователя
+ // геттеры и сеттеры параметров
     public int getScore() {
         return score;
     }

@@ -8,14 +8,14 @@ import java.io.Serializable;
  */
 public class Coordinate implements Serializable {
 
-    private int x;
-    private int y;
+    private int x; //координата х
+    private int y; //координата у
 
-    public Coordinate(int x, int y) {
+    public Coordinate(int x, int y) { //конструктор с координатами
         this.x = x;
         this.y = y;
     }
-
+//сеттеры и геттеры для полей - запись и получение данных
     public void setXY(int x, int y) {
         this.x = x;
         this.y = y;
@@ -38,7 +38,7 @@ public class Coordinate implements Serializable {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(Object obj) { // стандартные методы для коллекций
         if (obj == this) {
             return true;
         }
@@ -50,7 +50,7 @@ public class Coordinate implements Serializable {
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode() { // стандартные методы для коллекций
         int hash = 7;
         hash = 19 * hash + this.x;
         hash = 19 * hash + this.y;
@@ -60,5 +60,5 @@ public class Coordinate implements Serializable {
     @Override
     public String toString() {
         return "x=" + x + ", y=" + y;
-    }
+    } // метод для преобразования в строку
 }

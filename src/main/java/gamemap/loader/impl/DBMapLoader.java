@@ -29,7 +29,7 @@ public class DBMapLoader extends AbstractMapLoader {
     }
 
     @Override
-    public ArrayList<SavedMapInfo> getSavedMapList(User user) {
+    public ArrayList<SavedMapInfo> getSavedMapList(User user) { // получение списка данных из таблицы saved_game
 
         ArrayList<SavedMapInfo> list = new ArrayList<>();
         PreparedStatement selectStmt = null;
@@ -82,12 +82,12 @@ public class DBMapLoader extends AbstractMapLoader {
     }
 
     @Override
-    public boolean saveMap(SavedMapInfo saveMapInfo) {
+    public boolean saveMap(SavedMapInfo saveMapInfo) { // сохранение карты
         PreparedStatement insertStmt = null;
         SQLiteConnection sqliteDB = SQLiteConnection.getInstance();
 
         try {
-
+          //запись таблицы saved_game в БД - заполнение данными
             insertStmt = sqliteDB.getConnection().prepareStatement("insert into saved_game(player_id, save_date, collection, total_score, map_id, turns_count) values(?,?,?,?,?,?)");
             insertStmt.setInt(1, saveMapInfo.getUser().getId());
             insertStmt.setLong(2, new Date().getTime());
@@ -118,14 +118,14 @@ public class DBMapLoader extends AbstractMapLoader {
     }
 
     @Override
-    public boolean loadMap(MapInfo mapInfo) {
+    public boolean loadMap(MapInfo mapInfo) { //загрузка карты
 
         if (mapInfo.getLevelId() > 0) {
-            return createNewMap(mapInfo.getLevelId());
+            return createNewMap(mapInfo.getLevelId()); // выбор карты по идентификатору уровня сложности
         }
 
         if (mapInfo.getId() > 0) {
-            return loadMap(mapInfo.getId());
+            return loadMap(mapInfo.getId());// выбор карты по идентификатору
         }
 
         return false;
@@ -133,7 +133,7 @@ public class DBMapLoader extends AbstractMapLoader {
     }
 
     @Override
-    public boolean deleteSavedMap(MapInfo mapInfo) {
+    public boolean deleteSavedMap(MapInfo mapInfo) { // удаление сохраненной карты из БД по идентификатору
         PreparedStatement deleteStmt = null;
         SQLiteConnection sqliteDB = SQLiteConnection.getInstance();
 
@@ -165,7 +165,7 @@ public class DBMapLoader extends AbstractMapLoader {
         return false;
     }
 
-    private boolean createNewMap(int levelId) {
+    private boolean createNewMap(int levelId) { //создание новой карты с указанием уровня сложности
         PreparedStatement selectStmt = null;
 
         ResultSet rs = null;
@@ -181,7 +181,7 @@ public class DBMapLoader extends AbstractMapLoader {
             rs = selectStmt.executeQuery();
 
             while (rs.next()) {
-
+                 //запись данных
                 gameMap.getMapInfo().setId(rs.getInt("id"));
                 gameMap.getMapInfo().setMapName(rs.getString("map_name"));
                 gameMap.getMapInfo().setTurnsLimit(rs.getInt("turns_limit"));
@@ -244,7 +244,7 @@ public class DBMapLoader extends AbstractMapLoader {
 
     }
 
-    private boolean loadMap(int id) {
+    private boolean loadMap(int id) { // выбор карты из БД по id
         PreparedStatement selectStmt = null;
 
         ResultSet rs = null;
@@ -277,7 +277,7 @@ public class DBMapLoader extends AbstractMapLoader {
                 gameMap.getMapInfo().setMapName(rs.getString("map_name"));
                 gameMap.getMapInfo().setTurnsLimit(rs.getInt("turns_limit"));
 
-                GoldMan goldMan = (GoldMan)gameMap.getGameCollection().getGameObjects(GameObjectType.GOLDMAN).get(0);
+                GoldMan goldMan = (GoldMan)gameMap.getGameCollection().getGameObjects(GameObjectType.GOLDMAN).get(0); // получение персонажа из коллекции
                 goldMan.setTurnsNumber(rs.getInt("turns_count"));
                 goldMan.setTotalScore(rs.getInt("total_score"));
             }

@@ -8,7 +8,7 @@ import enums.GameObjectType;
 import gameobjects.impl.Coordinate;
 
 import javax.swing.*;
-
+//интерфейс для статического объекта
 public interface StaticObject {
 
 

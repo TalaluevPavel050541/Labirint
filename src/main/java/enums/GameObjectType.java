@@ -8,14 +8,14 @@ import java.io.Serializable;
 /**
  * типы объектов, которые участвуют в игре (которые будут рисоваться на карте)
  */
-public enum GameObjectType implements Serializable {
+public enum GameObjectType implements Serializable { //перечисление констант
 
-        TREE(6),
-        MONSTER(5),
-        TREASURE(4),
-        EXIT(3),
-        WALL(2),
-        GOLDMAN(1),
+        TREE(6), // дерево
+        MONSTER(5), // монстр
+        TREASURE(4), // сокровище
+        EXIT(3), //выход
+        WALL(2), //стена
+        GOLDMAN(1), //персонаж
         NOTHING(-1);
 
         private GameObjectType(int indexPriority) {

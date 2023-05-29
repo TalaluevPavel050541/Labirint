@@ -7,17 +7,18 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+//класс для работы с БД
 public class SQLiteConnection {
 
-    private SQLiteConnection() {
+    private SQLiteConnection() { //конструктор класса
     }
 
     // Используется паттерн Singleton - используем единственный
     // экземпляр класса для того, чтобы создать объекты в любом месте программы
-    private static SQLiteConnection instance;
+    private static SQLiteConnection instance; //статическая переменная класса SQLiteConnection - Поле для хранения объекта-одиночки
 
-    public static SQLiteConnection getInstance() {
+    public static SQLiteConnection getInstance() {   // Основной статический метод одиночки служит альтернативой
+        // конструктору и является точкой доступа к экземпляру класса SQLiteConnection.
         if (instance == null) {
             instance = new SQLiteConnection();
         }
@@ -25,9 +26,9 @@ public class SQLiteConnection {
         return instance;
     }
     private Connection con;
-    private String path = "db/goldman.db";
+    private String path = "db/goldman.db"; // переменная строки для указания пути файла
 
-    public Connection getConnection() {
+    public Connection getConnection() { // получение соединения
         try {
 
 
@@ -44,18 +45,18 @@ public class SQLiteConnection {
 
             return con;
 
-        } catch (SQLException ex) {
+        } catch (SQLException ex) { //в случае ошибки соединения выводиться лог об ошибке
             Logger.getLogger(DbScoreSaver.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return null;
     }
 
-    public void closeConnection() {
+    public void closeConnection() { //закрытие соединения
         try {
             con.close();
             con = null;
-        } catch (Exception e) {
+        } catch (Exception e) { //в случае ошибки соединения выводиться лог об ошибке
             Logger.getLogger(DbScoreSaver.class.getName()).log(Level.SEVERE, null, e);
         }
     }

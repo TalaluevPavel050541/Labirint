@@ -11,8 +11,8 @@ import enums.GameObjectType;
 public class Nothing extends AbstractGameObject {
 
     public Nothing(Coordinate coordinate) {
-        super.setType(GameObjectType.NOTHING);
-        super.setCoordinate(coordinate);
-        super.setIcon(null);
+        super.setType(GameObjectType.NOTHING); // запись объекта пустота
+        super.setCoordinate(coordinate);//запись координаты
+        super.setIcon(null);//нет иконки
     }
 }

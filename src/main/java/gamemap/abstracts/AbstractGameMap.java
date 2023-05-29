@@ -15,8 +15,9 @@ import java.util.logging.Logger;
 public abstract class AbstractGameMap implements TimeMap, Serializable { // Serializable нужен для сериализации (сохранения) объекта карты, чтобы можно было сохранять игру и восстанавливать
 
     private static final long serialVersionUID = 1L;
-    protected GameCollection gameCollection;
-    protected MapInfo mapInfo = new MapInfo();
+    protected GameCollection gameCollection; // определение коллекции (содержит две коллекции с объектами реализованные в MapCollection
+    //и коллекцию слушателей listeners
+    protected MapInfo mapInfo = new MapInfo(); // объект карты (из БД map)
 
     public AbstractGameMap(GameCollection gameCollection) {
         this.gameCollection = gameCollection;
@@ -32,7 +33,7 @@ public abstract class AbstractGameMap implements TimeMap, Serializable { // Seri
     }
 
 
-
+    //получение объекта по приоритету
     public AbstractGameObject getPriorityObject(AbstractGameObject firstObject, AbstractGameObject secondObject) {
         // приоритет объекта зависит от номера индекса объекта enum
         return (firstObject.getType().getIndexPriority() > secondObject.getType().getIndexPriority()) ? firstObject : secondObject; // сокращенная запись условия if: если первый объект имеет больший приоритет - вернуть его, иначе вернуть второй объект
@@ -41,8 +42,8 @@ public abstract class AbstractGameMap implements TimeMap, Serializable { // Seri
 
 
     @Override
-    public GameCollection getGameCollection() {
-        if (gameCollection == null) {
+    public GameCollection getGameCollection() { // получение коллекции с объектами
+        if (gameCollection == null) { // проверка на существование GameCollection
             try {
                 throw new Exception("Game collection not initialized!");
             } catch (Exception ex) {
@@ -54,5 +55,5 @@ public abstract class AbstractGameMap implements TimeMap, Serializable { // Seri
 
     public void setGameCollection(GameCollection gameCollection) {
         this.gameCollection = gameCollection;
-    }
+    } // запись коллекции с объектами и слушателями
 }

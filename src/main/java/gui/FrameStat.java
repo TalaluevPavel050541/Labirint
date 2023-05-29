@@ -7,7 +7,7 @@ import objects.UserScore;
 import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
+// класс, отвечающий за разработку формы статистики по игре.
 public class FrameStat extends BaseChildFrame implements ActionListener {
 
     private ArrayList<UserScore> list;
@@ -105,18 +105,18 @@ public class FrameStat extends BaseChildFrame implements ActionListener {
     // End of variables declaration//GEN-END:variables
 
     @Override
-    protected void showFrame(JFrame parent) {
+    protected void showFrame(JFrame parent) { // отображение формы статистика
 
-        jTableStat.setModel(new ScoreTableModel(list));
+        jTableStat.setModel(new ScoreTableModel(list)); // добавление очков
 
-        jTableStat.setRowHeight(40);
+        jTableStat.setRowHeight(40); //высота строк
 
-        super.showFrame(parent);
+        super.showFrame(parent); // показ окна
 
     }
 
     @Override
-    protected void closeFrame() {
+    protected void closeFrame() { //закрытие формы
         super.closeFrame();
         if (closeFrameListener!=null){
             onClose(closeFrameListener);

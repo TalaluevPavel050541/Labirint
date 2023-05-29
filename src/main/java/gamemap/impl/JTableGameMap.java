@@ -16,11 +16,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+//Отрисовка карты - для карты используется JTable из Swing с помощью композиции
 public class JTableGameMap extends AbstractGameMap implements TimeMap {
 
-    private transient JTable jTableMap = new JTable();
-    private transient String[] columnNames;
+    private transient JTable jTableMap = new JTable(); // создание компонента JTable
+    private transient String[] columnNames;// массив для названий столбцов
+
     // объекты для отображения на карте будут храниться в двумерном массиве типа AbstractGameObject
     // каждый элемент массива будет обозначаться согласно текстовому представлению объекта как описано в GameObjectType
     private transient AbstractGameObject[][] mapObjects;
@@ -36,21 +37,17 @@ public class JTableGameMap extends AbstractGameMap implements TimeMap {
         } catch (Exception ex) {
             Logger.getLogger(JTableGameMap.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-
-
-
     }
 
-    private void updateObjectsArray() {
-
+    private void updateObjectsArray() { // обвновление двумерного массива, JTable использует двумерный массив
+//считывание объектов из коллекции и заполнение двумерного массива
         mapObjects = new AbstractGameObject[mapInfo.getHeight()][mapInfo.getWidth()];
 
-        for (AbstractGameObject gameObj : getGameCollection().getAllGameObjects()) {
+        for (AbstractGameObject gameObj : getGameCollection().getAllGameObjects()) { // создаем объекты по координатам
             int y = gameObj.getCoordinate().getY();
             int x = gameObj.getCoordinate().getX();
-            if (mapObjects[y][x] != null) { // если в этих координатах уже есть какой то объект
-                mapObjects[y][x] = getGameCollection().getObjectByCoordinate(x, y);
+            if (mapObjects[y][x] != null) { // если в этих координатах уже есть какой-то объект
+                mapObjects[y][x] = getGameCollection().getObjectByCoordinate(x, y); // получение объекта из коллекции по координатам
             } else {
                 mapObjects[y][x] = gameObj;
             }
@@ -58,14 +55,14 @@ public class JTableGameMap extends AbstractGameMap implements TimeMap {
     }
 
     @Override
-    public boolean updateMap() {
+    public boolean updateMap() { // проверка на обновление на карте
 
         if (mapObjects == null || mapObjects.length == 0) {
-            updateObjectsArray();
+            updateObjectsArray(); // обновление объектов на карте
         }
 
         if (jTableMap.getModel().getRowCount() == 0) {
-            updateModel();
+            updateModel(); // обновляем ячейки на карте
         }
 
         return true;
@@ -89,18 +86,18 @@ public class JTableGameMap extends AbstractGameMap implements TimeMap {
     @Override
     public void updateMapObjects(AbstractGameObject obj1, AbstractGameObject obj2) {
 
-        if (obj1 != null) {
-            int y1 = obj1.getCoordinate().getY();
-            int x1 = obj1.getCoordinate().getX();
+        if (obj1 != null) { // объект 1
+            int y1 = obj1.getCoordinate().getY(); // получение координаты y1
+            int x1 = obj1.getCoordinate().getX();// получение координаты х1
 
             ((AbstractTableModel) jTableMap.getModel()).setValueAt(getGameCollection().getObjectByCoordinate(x1, y1), y1, x1);
         }
 
-        if (obj2 != null) {
-            int y2 = obj2.getCoordinate().getY();
-            int x2 = obj2.getCoordinate().getX();
+        if (obj2 != null) { // // объект 2
+            int y2 = obj2.getCoordinate().getY(); // получение координаты y2
+            int x2 = obj2.getCoordinate().getX();// получение координаты х2
 
-            ((AbstractTableModel) jTableMap.getModel()).setValueAt(getGameCollection().getObjectByCoordinate(x2, y2), y2, x2);
+            ((AbstractTableModel) jTableMap.getModel()).setValueAt(getGameCollection().getObjectByCoordinate(x2, y2), y2, x2); // получение объекта по координатам
         }
 
     }
@@ -108,23 +105,20 @@ public class JTableGameMap extends AbstractGameMap implements TimeMap {
     private boolean updateModel() {
 
         try {
-
-
-            // присваиваем пустоту всем заголовкам столбцов, чтобы у таблицы не было заголовоков, а то некрасиво смотрится
-            columnNames = new String[mapInfo.getWidth()];
-
-            for (int i = 0; i < columnNames.length; i++) {
+            // присваиваем пустоту всем заголовкам столбцов, чтобы у таблицы не было заголовоков
+            columnNames = new String[mapInfo.getWidth()]; //отрисовываем колонки
+           for (int i = 0; i < columnNames.length; i++) {
                 columnNames[i] = "";
             }
 
 
             // игровое поле будет отображаться в super без заголовков столбцов
-            jTableMap.setModel(new DefaultTableModel(mapObjects, columnNames));
+            jTableMap.setModel(new DefaultTableModel(mapObjects, columnNames)); // передаем двумерный массив и названия столбцов в модель
 
 
             // вместо текста в ячейках таблицы устанавливаем отображение картинки
             for (int i = 0; i < jTableMap.getColumnCount(); i++) {
-                jTableMap.getColumnModel().getColumn(i).setCellRenderer(new ImageRenderer());
+                jTableMap.getColumnModel().getColumn(i).setCellRenderer(new ImageRenderer()); //для каждой ячейки указываем специальный ImageRenderer()
                 TableColumn a = jTableMap.getColumnModel().getColumn(i);
                 a.setPreferredWidth(26);
             }
@@ -136,7 +130,7 @@ public class JTableGameMap extends AbstractGameMap implements TimeMap {
         }
         return true;
     }
-
+//настройки JTable, чтобы карта выглядела без заголовков, чтобы не было линий, заданы ширина и высота (квадратная карта)
     private void prepareTable() {
         jTableMap.setEnabled(false);
         jTableMap.setSize(new java.awt.Dimension(300, 300));
@@ -149,28 +143,34 @@ public class JTableGameMap extends AbstractGameMap implements TimeMap {
         jTableMap.setVerifyInputWhenFocusTarget(false);
     }
 
+    //функционал таймера (внутренний класс)
     private class TimeMover implements ActionListener {
 
-        private Timer timer;
-        private final static int MOVING_PAUSE = 500;
-        private final static int INIT_PAUSE = 1000;
+        private Timer timer; // класс таймер из свинга
+        private final static int MOVING_PAUSE = 500; // пауза между движением
+        /*
+        Устанавливает начальную задержку таймера,
+        время в миллисекундах ожидания после запуска таймера перед запуском первого события.
+         */
+        private final static int INIT_PAUSE = 1000; // пауза перед началом движения
 
         private TimeMover() {
             timer = new Timer(MOVING_PAUSE, this);
-            timer.setInitialDelay(INIT_PAUSE);
+            timer.setInitialDelay(INIT_PAUSE); // пауза перед началом движения
         }
 
         public void start() {
             timer.start();
-        }
+        } // запуск таймера
 
         public void stop() {
             timer.stop();
-        }
+        } // остановка таймера
 
+        //каждый полсекунды будет вызываться метод actionPerformed
         @Override
         public void actionPerformed(ActionEvent e) {
-            getGameCollection().moveObject(new AgressiveMoving(), GameObjectType.MONSTER);
+            getGameCollection().moveObject(new AgressiveMoving(), GameObjectType.MONSTER); // задание стратегии для монстра
         }
     }
 }

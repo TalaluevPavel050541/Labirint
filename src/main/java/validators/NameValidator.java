@@ -1,7 +1,7 @@
 package validators;
 
 import java.util.Arrays;
-
+//валидатор для имени пользователя
 public class NameValidator implements StringValidator{
 
     // массив содержит все запрещенные имена (все буквы большие, потом будем имя приводить к заглавным буквам и сравнивать с элементами массива)
@@ -11,9 +11,9 @@ public class NameValidator implements StringValidator{
 
     // проверяет имя на валидность
     @Override
-    public boolean isValid(String text) {
+    public boolean isValid(String text) { //метод проверки на валидность
         
-        if (text==null || text.trim().length()==0){
+        if (text==null || text.trim().length()==0){ //проверка записи на Null
             return false;
         }
         
@@ -23,6 +23,6 @@ public class NameValidator implements StringValidator{
                 isValidName = true;
             }
         }
-        return isValidName;
+        return isValidName;// возвращает true или false
     }
 }

@@ -7,10 +7,10 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-
+// класс для отображения таблицы сохраненных результатов пользователя - СТАТИСТИКА
 public class ScoreTableModel extends AbstractTableModel {
 
-    private final ArrayList<UserScore> list;
+    private final ArrayList<UserScore> list;// список сохраненных объектов UserScore
 
     public ScoreTableModel(ArrayList<UserScore> list) {
         this.list = list;
@@ -19,33 +19,34 @@ public class ScoreTableModel extends AbstractTableModel {
     @Override
     public int getRowCount() {
         return list.size();
-    }
+    } // количество строк получаем из размера коллекции, сколько будет объектов - столько и строк
 
     @Override
     public int getColumnCount() {
         return 5;
-    }
-    private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    } //задаем количество столбцов
+    private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm"); // формат даты
 
+    //получение данных для каждого поля таблицы с сохраненными результатами
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Object value = null;
         switch (columnIndex) {
             case 0:
-                value = rowIndex + 1;
+                value = rowIndex + 1; // поле используется для нумерации
                 break;
             case 1:
-                value = list.get(rowIndex).getUser().getUsername();
+                value = list.get(rowIndex).getUser().getUsername(); // получение имени пользователя
                 break;
             case 2:
-                Date date = new Date(list.get(rowIndex).getPlayDate());
-                value = dateFormat.format(date);
+                Date date = new Date(list.get(rowIndex).getPlayDate()); // получение даты из таблицы
+                value = dateFormat.format(date); // преобразование формата даты
                 break;
             case 3:
-                value = list.get(rowIndex).getScore();
+                value = list.get(rowIndex).getScore(); // получение количества очков
                 break;
             case 4:
-                value = list.get(rowIndex).getPlayCount();
+                value = list.get(rowIndex).getPlayCount(); // получение количества игр
                 break;
             default:
                 throw new IndexOutOfBoundsException("Column index out of bounds: " + // NOI18N
@@ -54,16 +55,17 @@ public class ScoreTableModel extends AbstractTableModel {
         return value;
     }
 
+    //определяем тип значений для каждого поля
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         Class<?> clazz;
-        switch (columnIndex) {
-            case 0:
+        switch (columnIndex) { // задаем типы для полей в таблице
+            case 0: //1,4,5 - это число
             case 3:
             case 4:
                 clazz = Integer.class;
                 break;
-            case 1:
+            case 1: // 2,3 - строка
             case 2:
                 clazz = String.class;
                 break;
@@ -74,6 +76,7 @@ public class ScoreTableModel extends AbstractTableModel {
         return clazz;
     }
 
+    // даем имена полям в таблице
     @Override
     public String getColumnName(int column) {
         String columnName;

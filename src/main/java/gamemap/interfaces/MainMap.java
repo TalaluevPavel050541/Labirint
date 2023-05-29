@@ -5,7 +5,7 @@ import objects.MapInfo;
 
 public interface MainMap {
 
-    MapInfo getMapInfo();
+    MapInfo getMapInfo(); // получение информации о карте
     
     GameCollection getGameCollection();// все карты должны хранить коллекцию объектов
    

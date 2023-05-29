@@ -8,7 +8,7 @@ import movestrategies.interfaces.MoveStrategy;
 
 
 import java.util.Random;
-
+//спокойная стратегия для движения монстра
 public class SlowMoving implements MoveStrategy {
 
 
@@ -17,6 +17,7 @@ public class SlowMoving implements MoveStrategy {
 
         MovingDirection direction = null;
 
+         // получение текущих координат
         int characterX = targetObject.getCoordinate().getX();
         int characterY = targetObject.getCoordinate().getY();
 
@@ -73,7 +74,7 @@ public class SlowMoving implements MoveStrategy {
         return direction;
     }
 
-    private int getRandomInt(int i) {
+    private int getRandomInt(int i) { // получение рандомного числа
         Random r = new Random();
         return r.nextInt(i) + 1;
     }

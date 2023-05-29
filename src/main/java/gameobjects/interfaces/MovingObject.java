@@ -15,7 +15,8 @@ import gameobjects.abstracts.AbstractGameObject;
  */
 public interface MovingObject extends StaticObject {
 
-    ActionResult moveToObject(MovingDirection direction, AbstractGameObject gameObject);
+    //передаем направление, и объект, в который хотим сделать движение
+    ActionResult moveToObject(MovingDirection direction, AbstractGameObject gameObject); // метод возвращающий тип события
 
-    int getStep();
+    int getStep(); // для каждого объекта прописан шаг, по умолчанию он равен 1 - ход на 1 шаг вперед для движущихся объектов
 }

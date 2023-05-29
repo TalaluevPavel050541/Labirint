@@ -18,8 +18,8 @@ public class Monster extends AbstractSoundObject {
     protected static EnumMap<MovingDirection, ImageIcon> monsterImages = new EnumMap<>(MovingDirection.class);// карта иконок для всех направлений монстра
 
     public Monster(Coordinate coordinate) {
-        super.setType(GameObjectType.MONSTER);
-        super.setCoordinate(coordinate);
+        super.setType(GameObjectType.MONSTER); // запись типа объекта
+        super.setCoordinate(coordinate); //запись координаты
 
         if (monsterImages.isEmpty()) {// для всех монстров будут одинаковые картики, поэтому нет смысла создавать для каждого объекта отдельный map
             monsterImages.put(MovingDirection.UP, getImageIcon("/images/monster_up.jpg"));
@@ -33,7 +33,7 @@ public class Monster extends AbstractSoundObject {
     }
 
     @Override
-    public ActionResult doAction(AbstractGameObject gameObject) {
+    public ActionResult doAction(AbstractGameObject gameObject) { // метод возвращает событие
 
         if (gameObject == null){
             return ActionResult.NO_ACTION;
@@ -57,7 +57,7 @@ public class Monster extends AbstractSoundObject {
     }
 
     @Override
-    public Clip getSoundClip(ActionResult actionResult) {
+    public Clip getSoundClip(ActionResult actionResult) { // получение музыкального клипа
         switch (actionResult) {
             case DIE:
                 return super.getDieClip();
@@ -70,5 +70,5 @@ public class Monster extends AbstractSoundObject {
     @Override
     public void changeIcon(MovingDirection direction) {
         super.setIcon(monsterImages.get(direction));
-    }
+    } // смена иконки
 }

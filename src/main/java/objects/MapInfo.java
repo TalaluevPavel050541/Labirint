@@ -1,18 +1,19 @@
 package objects;
-
+//таблица Map в БД
 public class MapInfo {
 
-    private User user = new User();
-    private int id;
-    private String mapName;
-    private String value;
-    private int levelId;
-    private int turnsLimit;
-    private int height;
-    private int width;
-    private boolean exitExist;
-    private boolean goldManExist;
+    private User user = new User(); // класс пользователя
+    private int id; // идентификатор
+    private String mapName;// название карты
+    private String value; //значения записанные в карте game.map
+    private int levelId;//уровень сложности
+    private int turnsLimit; // лимит шагов в карте
+    private int height; //высота
+    private int width; // ширина
+    private boolean exitExist;//проверка выхода на карте
+    private boolean goldManExist; // проверка входа на карте
 
+    //методы для присвоения и получения вышеописанных параметров - стандартные сеттеры и геттеры для Java
     public String getMapName() {
         return mapName;
     }
